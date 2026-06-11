@@ -22,7 +22,7 @@ export default defineComponent({
     nodes:       { type: Array as PropType<DslNode[]>, required: true },
     selectedNid: { type: Number, default: undefined },
   },
-  emits: ['nodeClick'],
+  emits: ['nodeClick', 'scroll'],
   setup(props, { emit }) {
     const containerRef    = ref<HTMLElement | null>(null)
     const containerWidth  = ref(0)
@@ -32,7 +32,7 @@ export default defineComponent({
     const allNodes = computed(() => {
       const flat = flattenNodes(props.nodes)
       // Track semantic on every node so visibleNodes recomputes when type changes
-      flat.forEach(n => void n.semantic)
+      flat.forEach(n => void n.layerType)
       return flat
     })
 
@@ -45,17 +45,15 @@ export default defineComponent({
       return { w: w || 375, h: h || 812 }
     })
 
-    const scale = computed(() =>
-      containerWidth.value ? Math.min(1, containerWidth.value / canvasSize.value.w) : 1
+    // Horizontal-only scale: width fills the container, height stays fixed
+    const scaleX = computed(() =>
+      containerWidth.value > 0 ? containerWidth.value / canvasSize.value.w : 1
     )
 
-    const scaledHeight = computed(() => canvasSize.value.h * scale.value)
-
-    // Viewport culling: convert scroll/height from screen space → canvas space
+    // Viewport culling: y-axis only (heights are unscaled)
     const visibleNodes = computed(() => {
-      const s   = scale.value
-      const top = scrollTop.value / s - CULL_PADDING
-      const bot = (scrollTop.value + containerHeight.value) / s + CULL_PADDING
+      const top = scrollTop.value - CULL_PADDING
+      const bot = scrollTop.value + containerHeight.value + CULL_PADDING
 
       return allNodes.value.filter(n => {
         if (n.rect.w === 0 || n.rect.h === 0 || n.passthrough) return false
@@ -79,6 +77,7 @@ export default defineComponent({
 
       el.addEventListener('scroll', () => {
         scrollTop.value = el.scrollTop
+        emit('scroll')
       }, { passive: true })
     })
 
@@ -90,30 +89,25 @@ export default defineComponent({
         class="w-full h-full overflow-y-auto bg-slate-100"
         onClick={() => emit('nodeClick', null)}
       >
-        {/* Spacer that gives the scroller its full height */}
-        <div style={{ position: 'relative', height: `${scaledHeight.value}px` }}>
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width:  `${canvasSize.value.w}px`,
-              height: `${canvasSize.value.h}px`,
-              transformOrigin: 'top left',
-              transform: `scale(${scale.value})`,
-            }}
-          >
-            {visibleNodes.value.map(n => (
-              <NodeBlock
-                key={n.nid}
-                node={n}
-                selected={n.nid === props.selectedNid}
-                onClick={(node: DslNode, e: MouseEvent) =>
-                  emit('nodeClick', { node, clientX: e.clientX, clientY: e.clientY } as ClickPayload)
-                }
-              />
-            ))}
-          </div>
+        {/* Canvas fills container width; height stays at original canvas size */}
+        <div
+          style={{
+            position: 'relative',
+            width:    '100%',
+            height:   `${canvasSize.value.h}px`,
+          }}
+        >
+          {visibleNodes.value.map(n => (
+            <NodeBlock
+              key={n.nid}
+              node={n}
+              scaleX={scaleX.value}
+              selected={n.nid === props.selectedNid}
+              onClick={(node: DslNode, e: MouseEvent) =>
+                emit('nodeClick', { node, clientX: e.clientX, clientY: e.clientY } as ClickPayload)
+              }
+            />
+          ))}
         </div>
 
         {/* Debug badge — remove in production */}

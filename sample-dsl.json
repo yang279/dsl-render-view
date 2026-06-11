@@ -1,84 +1,134 @@
 {
   "nid": 1,
   "tag": "div",
-  "depth": 2,
-  "rect": { "x": 0, "y": 0, "w": 375, "h": 812 },
-  "semantic": "container",
-  "label": "首页根容器",
-  "confidence": "high",
-  "style": { "backgroundColor": "rgb(245,245,245)" },
+  "rect": {
+    "x": 0,
+    "y": 0,
+    "w": 375,
+    "h": 812
+  },
+  "layerType": "frame",
+  "layerName": "首页根容器",
+  "layerDescription": "首页根容器",
+  "style": {
+    "backgroundColor": "rgb(245,245,245)"
+  },
   "children": [
     {
       "nid": 2,
       "tag": "header",
-      "depth": 3,
-      "rect": { "x": 0, "y": 0, "w": 375, "h": 56, "fixed": true },
-      "semantic": "navbar",
-      "label": "顶部导航栏",
-      "confidence": "high",
-      "style": { "backgroundColor": "rgb(255,255,255)", "boxShadow": "0px 1px 0px rgba(0,0,0,0.08)" },
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 375,
+        "h": 56,
+        "fixed": true
+      },
+      "layerType": "frame",
+      "layerName": "顶部导航栏",
+      "layerDescription": "顶部导航栏",
+      "style": {
+        "backgroundColor": "rgb(255,255,255)",
+        "boxShadow": "0px 1px 0px rgba(0,0,0,0.08)"
+      },
       "children": [
         {
           "nid": 3,
           "tag": "span",
-          "depth": 4,
-          "rect": { "x": 16, "y": 16, "w": 24, "h": 24 },
-          "semantic": "icon",
-          "label": "菜单图标 24×24 细线",
-          "confidence": "high",
+          "rect": {
+            "x": 16,
+            "y": 16,
+            "w": 24,
+            "h": 24
+          },
+          "layerType": "icon",
+          "layerName": "菜单图标 24×24 细线",
+          "layerDescription": "菜单图标 24×24 细线",
           "style": {}
         },
         {
           "nid": 4,
           "tag": "h1",
-          "depth": 4,
-          "rect": { "x": 130, "y": 12, "w": 115, "h": 32 },
-          "text": "首页",
-          "semantic": "heading",
-          "label": "页面标题",
-          "confidence": "high",
-          "style": { "fontSize": "18px", "fontWeight": "600", "textAlign": "center" }
+          "rect": {
+            "x": 130,
+            "y": 12,
+            "w": 115,
+            "h": 32
+          },
+          "layerType": "text",
+          "layerName": "页面标题",
+          "layerDescription": "页面标题",
+          "style": {
+            "fontSize": "18px",
+            "fontWeight": "600",
+            "textAlign": "center"
+          },
+          "text": "首页"
         },
         {
           "nid": 5,
           "tag": "div",
-          "depth": 4,
-          "rect": { "x": 332, "y": 12, "w": 32, "h": 32 },
-          "semantic": "avatar",
-          "label": "用户头像",
-          "confidence": "high",
-          "style": { "borderRadius": "50%" }
+          "rect": {
+            "x": 332,
+            "y": 12,
+            "w": 32,
+            "h": 32
+          },
+          "layerType": "component",
+          "layerName": "用户头像",
+          "layerDescription": "用户头像",
+          "style": {
+            "borderRadius": "50%"
+          }
         }
       ]
     },
     {
       "nid": 6,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 16, "y": 68, "w": 343, "h": 44 },
-      "semantic": "input",
-      "label": "搜索输入框",
-      "confidence": "high",
-      "style": { "borderRadius": "22px", "backgroundColor": "rgb(242,242,242)" }
+      "rect": {
+        "x": 16,
+        "y": 68,
+        "w": 343,
+        "h": 44
+      },
+      "layerType": "component",
+      "layerName": "搜索输入框",
+      "layerDescription": "搜索输入框",
+      "style": {
+        "borderRadius": "22px",
+        "backgroundColor": "rgb(242,242,242)"
+      }
     },
     {
       "nid": 7,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 16, "y": 124, "w": 343, "h": 160 },
-      "semantic": "card",
-      "label": "顶部横幅卡片",
-      "confidence": "high",
-      "style": { "borderRadius": "12px", "overflow": "hidden" },
+      "rect": {
+        "x": 16,
+        "y": 124,
+        "w": 343,
+        "h": 160
+      },
+      "layerType": "frame",
+      "layerName": "顶部横幅卡片",
+      "layerDescription": "顶部横幅卡片",
+      "style": {
+        "borderRadius": "12px",
+        "overflow": "hidden"
+      },
       "children": [
         {
           "nid": 8,
           "tag": "img",
-          "depth": 4,
-          "rect": { "x": 16, "y": 124, "w": 343, "h": 160 },
-          "semantic": "image",
-          "label": "横幅图片",
-          "confidence": "high",
+          "rect": {
+            "x": 16,
+            "y": 124,
+            "w": 343,
+            "h": 160
+          },
+          "layerType": "image",
+          "layerName": "横幅图片",
+          "layerDescription": "横幅图片",
           "style": {}
         }
       ]
@@ -86,205 +136,520 @@
     {
       "nid": 9,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 16, "y": 300, "w": 343, "h": 28 },
-      "semantic": "container",
-      "label": "热门推荐标题区",
-      "confidence": "high",
+      "rect": {
+        "x": 16,
+        "y": 300,
+        "w": 343,
+        "h": 28
+      },
+      "layerType": "frame",
+      "layerName": "热门推荐标题区",
+      "layerDescription": "热门推荐标题区",
       "style": {},
       "children": [
         {
           "nid": 10,
           "tag": "h2",
-          "depth": 4,
-          "rect": { "x": 16, "y": 300, "w": 120, "h": 24 },
-          "text": "热门推荐",
-          "semantic": "heading",
-          "label": "热门推荐标题",
-          "confidence": "high",
-          "style": { "fontSize": "16px", "fontWeight": "600" }
+          "rect": {
+            "x": 16,
+            "y": 300,
+            "w": 120,
+            "h": 24
+          },
+          "layerType": "text",
+          "layerName": "热门推荐标题",
+          "layerDescription": "热门推荐标题",
+          "style": {
+            "fontSize": "16px",
+            "fontWeight": "600"
+          },
+          "text": "热门推荐"
         },
         {
           "nid": 11,
           "tag": "span",
-          "depth": 4,
-          "rect": { "x": 300, "y": 304, "w": 59, "h": 16 },
-          "text": "查看全部",
-          "semantic": "text",
-          "label": "查看全部链接",
-          "confidence": "high",
-          "style": { "fontSize": "12px", "color": "rgb(100,100,100)" }
+          "rect": {
+            "x": 300,
+            "y": 304,
+            "w": 59,
+            "h": 16
+          },
+          "layerType": "text",
+          "layerName": "查看全部链接",
+          "layerDescription": "查看全部链接",
+          "style": {
+            "fontSize": "12px",
+            "color": "rgb(100,100,100)"
+          },
+          "text": "查看全部"
         }
       ]
     },
     {
       "nid": 12,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 16, "y": 336, "w": 163, "h": 140 },
-      "semantic": "card",
-      "label": "商品卡片A",
-      "confidence": "high",
-      "style": { "backgroundColor": "rgb(255,255,255)", "borderRadius": "8px" },
+      "rect": {
+        "x": 16,
+        "y": 336,
+        "w": 163,
+        "h": 140
+      },
+      "layerType": "frame",
+      "layerName": "商品卡片A",
+      "layerDescription": "商品卡片A",
+      "style": {
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "8px"
+      },
       "children": [
         {
           "nid": 13,
           "tag": "img",
-          "depth": 4,
-          "rect": { "x": 16, "y": 336, "w": 163, "h": 100 },
-          "semantic": "image",
-          "label": "商品图片A",
-          "confidence": "high",
+          "rect": {
+            "x": 16,
+            "y": 336,
+            "w": 163,
+            "h": 100
+          },
+          "layerType": "image",
+          "layerName": "商品图片A",
+          "layerDescription": "商品图片A",
           "style": {}
         },
         {
           "nid": 14,
           "tag": "p",
-          "depth": 4,
-          "rect": { "x": 24, "y": 444, "w": 147, "h": 20 },
-          "text": "商品名称A",
-          "semantic": "text",
-          "label": "商品名称A",
-          "confidence": "high",
-          "style": { "fontSize": "13px", "fontWeight": "500" }
+          "rect": {
+            "x": 24,
+            "y": 444,
+            "w": 147,
+            "h": 20
+          },
+          "layerType": "text",
+          "layerName": "商品名称A",
+          "layerDescription": "商品名称A",
+          "style": {
+            "fontSize": "13px",
+            "fontWeight": "500"
+          },
+          "text": "商品名称A"
         },
         {
           "nid": 15,
           "tag": "span",
-          "depth": 4,
-          "rect": { "x": 24, "y": 468, "w": 80, "h": 16 },
-          "text": "¥99.00",
-          "semantic": "text",
-          "label": "商品价格A",
-          "confidence": "high",
-          "style": { "fontSize": "12px", "color": "rgb(220,50,50)", "fontWeight": "600" }
+          "rect": {
+            "x": 24,
+            "y": 468,
+            "w": 80,
+            "h": 16
+          },
+          "layerType": "text",
+          "layerName": "商品价格A",
+          "layerDescription": "商品价格A",
+          "style": {
+            "fontSize": "12px",
+            "color": "rgb(220,50,50)",
+            "fontWeight": "600"
+          },
+          "text": "¥99.00"
         },
         {
           "nid": 16,
           "tag": "span",
-          "depth": 4,
-          "rect": { "x": 148, "y": 340, "w": 28, "h": 18 },
-          "text": "NEW",
-          "semantic": "badge",
-          "label": "新品角标",
-          "confidence": "high",
-          "style": { "backgroundColor": "rgb(255,80,80)", "borderRadius": "4px", "fontSize": "10px" }
+          "rect": {
+            "x": 148,
+            "y": 340,
+            "w": 28,
+            "h": 18
+          },
+          "layerType": "component",
+          "layerName": "新品角标",
+          "layerDescription": "新品角标",
+          "style": {
+            "backgroundColor": "rgb(255,80,80)",
+            "borderRadius": "4px",
+            "fontSize": "10px"
+          },
+          "text": "NEW"
         }
       ]
     },
     {
       "nid": 17,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 196, "y": 336, "w": 163, "h": 140 },
-      "semantic": "card",
-      "label": "商品卡片B",
-      "confidence": "high",
-      "style": { "backgroundColor": "rgb(255,255,255)", "borderRadius": "8px" },
+      "rect": {
+        "x": 196,
+        "y": 336,
+        "w": 163,
+        "h": 140
+      },
+      "layerType": "frame",
+      "layerName": "商品卡片B",
+      "layerDescription": "商品卡片B",
+      "style": {
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "8px"
+      },
       "children": [
         {
           "nid": 18,
           "tag": "img",
-          "depth": 4,
-          "rect": { "x": 196, "y": 336, "w": 163, "h": 100 },
-          "semantic": "image",
-          "label": "商品图片B",
-          "confidence": "high",
+          "rect": {
+            "x": 196,
+            "y": 336,
+            "w": 163,
+            "h": 100
+          },
+          "layerType": "image",
+          "layerName": "商品图片B",
+          "layerDescription": "商品图片B",
           "style": {}
         },
         {
           "nid": 19,
           "tag": "p",
-          "depth": 4,
-          "rect": { "x": 204, "y": 444, "w": 147, "h": 20 },
-          "text": "商品名称B",
-          "semantic": "text",
-          "label": "商品名称B",
-          "confidence": "high",
-          "style": { "fontSize": "13px", "fontWeight": "500" }
+          "rect": {
+            "x": 204,
+            "y": 444,
+            "w": 147,
+            "h": 20
+          },
+          "layerType": "text",
+          "layerName": "商品名称B",
+          "layerDescription": "商品名称B",
+          "style": {
+            "fontSize": "13px",
+            "fontWeight": "500"
+          },
+          "text": "商品名称B"
         },
         {
           "nid": 20,
           "tag": "span",
-          "depth": 4,
-          "rect": { "x": 204, "y": 468, "w": 80, "h": 16 },
-          "text": "¥199.00",
-          "semantic": "text",
-          "label": "商品价格B",
-          "confidence": "high",
-          "style": { "fontSize": "12px", "color": "rgb(220,50,50)", "fontWeight": "600" }
+          "rect": {
+            "x": 204,
+            "y": 468,
+            "w": 80,
+            "h": 16
+          },
+          "layerType": "text",
+          "layerName": "商品价格B",
+          "layerDescription": "商品价格B",
+          "style": {
+            "fontSize": "12px",
+            "color": "rgb(220,50,50)",
+            "fontWeight": "600"
+          },
+          "text": "¥199.00"
         }
       ]
     },
     {
       "nid": 21,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 16, "y": 492, "w": 343, "h": 24 },
-      "text": "最新动态",
-      "semantic": "heading",
-      "label": "最新动态标题",
-      "confidence": "high",
-      "style": { "fontSize": "16px", "fontWeight": "600" }
+      "rect": {
+        "x": 16,
+        "y": 492,
+        "w": 343,
+        "h": 24
+      },
+      "layerType": "text",
+      "layerName": "最新动态标题",
+      "layerDescription": "最新动态标题",
+      "style": {
+        "fontSize": "16px",
+        "fontWeight": "600"
+      },
+      "text": "最新动态"
     },
     {
       "nid": 22,
       "tag": "div",
-      "depth": 3,
-      "rect": { "x": 0, "y": 524, "w": 375, "h": 206 },
-      "semantic": "list",
-      "label": "动态列表",
-      "confidence": "high",
-      "style": { "backgroundColor": "rgb(255,255,255)" },
+      "rect": {
+        "x": 0,
+        "y": 524,
+        "w": 375,
+        "h": 206
+      },
+      "layerType": "frame",
+      "layerName": "动态列表",
+      "layerDescription": "动态列表",
+      "style": {
+        "backgroundColor": "rgb(255,255,255)"
+      },
       "children": [
         {
           "nid": 23,
           "tag": "div",
-          "depth": 4,
-          "rect": { "x": 0, "y": 524, "w": 375, "h": 68 },
-          "semantic": "list-item",
-          "label": "动态列表项1",
-          "confidence": "high",
+          "rect": {
+            "x": 0,
+            "y": 524,
+            "w": 375,
+            "h": 68
+          },
+          "layerType": "frame",
+          "layerName": "动态列表项1",
+          "layerDescription": "动态列表项1",
           "style": {},
           "children": [
-            { "nid": 24, "tag": "img", "depth": 5, "rect": { "x": 16, "y": 538, "w": 40, "h": 40 }, "semantic": "avatar", "label": "用户头像1", "confidence": "high", "style": { "borderRadius": "50%" } },
-            { "nid": 25, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 538, "w": 230, "h": 20 }, "text": "用户名称A", "semantic": "text", "label": "动态用户名1", "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "500" } },
-            { "nid": 26, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 562, "w": 230, "h": 16 }, "text": "发布了一条新动态内容...", "semantic": "text", "label": "动态摘要1", "confidence": "high", "style": { "fontSize": "12px", "color": "rgb(150,150,150)" } },
-            { "nid": 27, "tag": "span", "depth": 5, "rect": { "x": 344, "y": 548, "w": 16, "h": 16 }, "semantic": "icon", "label": "更多操作图标 16×16 细线", "confidence": "high", "style": {} }
+            {
+              "nid": 24,
+              "tag": "img",
+              "rect": {
+                "x": 16,
+                "y": 538,
+                "w": 40,
+                "h": 40
+              },
+              "layerType": "component",
+              "layerName": "用户头像1",
+              "layerDescription": "用户头像1",
+              "style": {
+                "borderRadius": "50%"
+              }
+            },
+            {
+              "nid": 25,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 538,
+                "w": 230,
+                "h": 20
+              },
+              "layerType": "text",
+              "layerName": "动态用户名1",
+              "layerDescription": "动态用户名1",
+              "style": {
+                "fontSize": "14px",
+                "fontWeight": "500"
+              },
+              "text": "用户名称A"
+            },
+            {
+              "nid": 26,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 562,
+                "w": 230,
+                "h": 16
+              },
+              "layerType": "text",
+              "layerName": "动态摘要1",
+              "layerDescription": "动态摘要1",
+              "style": {
+                "fontSize": "12px",
+                "color": "rgb(150,150,150)"
+              },
+              "text": "发布了一条新动态内容..."
+            },
+            {
+              "nid": 27,
+              "tag": "span",
+              "rect": {
+                "x": 344,
+                "y": 548,
+                "w": 16,
+                "h": 16
+              },
+              "layerType": "icon",
+              "layerName": "更多操作图标 16×16 细线",
+              "layerDescription": "更多操作图标 16×16 细线",
+              "style": {}
+            }
           ]
         },
-        { "nid": 28, "tag": "hr", "depth": 4, "rect": { "x": 68, "y": 592, "w": 291, "h": 1 }, "semantic": "divider", "label": "列表分割线1", "confidence": "high", "style": {} },
+        {
+          "nid": 28,
+          "tag": "hr",
+          "rect": {
+            "x": 68,
+            "y": 592,
+            "w": 291,
+            "h": 1
+          },
+          "layerType": "frame",
+          "layerName": "列表分割线1",
+          "layerDescription": "列表分割线1",
+          "style": {}
+        },
         {
           "nid": 29,
           "tag": "div",
-          "depth": 4,
-          "rect": { "x": 0, "y": 593, "w": 375, "h": 68 },
-          "semantic": "list-item",
-          "label": "动态列表项2",
-          "confidence": "high",
+          "rect": {
+            "x": 0,
+            "y": 593,
+            "w": 375,
+            "h": 68
+          },
+          "layerType": "frame",
+          "layerName": "动态列表项2",
+          "layerDescription": "动态列表项2",
           "style": {},
           "children": [
-            { "nid": 30, "tag": "img", "depth": 5, "rect": { "x": 16, "y": 607, "w": 40, "h": 40 }, "semantic": "avatar", "label": "用户头像2", "confidence": "high", "style": { "borderRadius": "50%" } },
-            { "nid": 31, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 607, "w": 230, "h": 20 }, "text": "用户名称B", "semantic": "text", "label": "动态用户名2", "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "500" } },
-            { "nid": 32, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 631, "w": 230, "h": 16 }, "text": "分享了一篇技术文章...", "semantic": "text", "label": "动态摘要2", "confidence": "high", "style": { "fontSize": "12px", "color": "rgb(150,150,150)" } },
-            { "nid": 33, "tag": "span", "depth": 5, "rect": { "x": 344, "y": 617, "w": 16, "h": 16 }, "semantic": "icon", "label": "更多操作图标 16×16 细线", "confidence": "high", "style": {} }
+            {
+              "nid": 30,
+              "tag": "img",
+              "rect": {
+                "x": 16,
+                "y": 607,
+                "w": 40,
+                "h": 40
+              },
+              "layerType": "component",
+              "layerName": "用户头像2",
+              "layerDescription": "用户头像2",
+              "style": {
+                "borderRadius": "50%"
+              }
+            },
+            {
+              "nid": 31,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 607,
+                "w": 230,
+                "h": 20
+              },
+              "layerType": "text",
+              "layerName": "动态用户名2",
+              "layerDescription": "动态用户名2",
+              "style": {
+                "fontSize": "14px",
+                "fontWeight": "500"
+              },
+              "text": "用户名称B"
+            },
+            {
+              "nid": 32,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 631,
+                "w": 230,
+                "h": 16
+              },
+              "layerType": "text",
+              "layerName": "动态摘要2",
+              "layerDescription": "动态摘要2",
+              "style": {
+                "fontSize": "12px",
+                "color": "rgb(150,150,150)"
+              },
+              "text": "分享了一篇技术文章..."
+            },
+            {
+              "nid": 33,
+              "tag": "span",
+              "rect": {
+                "x": 344,
+                "y": 617,
+                "w": 16,
+                "h": 16
+              },
+              "layerType": "icon",
+              "layerName": "更多操作图标 16×16 细线",
+              "layerDescription": "更多操作图标 16×16 细线",
+              "style": {}
+            }
           ]
         },
-        { "nid": 34, "tag": "hr", "depth": 4, "rect": { "x": 68, "y": 661, "w": 291, "h": 1 }, "semantic": "divider", "label": "列表分割线2", "confidence": "high", "style": {} },
+        {
+          "nid": 34,
+          "tag": "hr",
+          "rect": {
+            "x": 68,
+            "y": 661,
+            "w": 291,
+            "h": 1
+          },
+          "layerType": "frame",
+          "layerName": "列表分割线2",
+          "layerDescription": "列表分割线2",
+          "style": {}
+        },
         {
           "nid": 35,
           "tag": "div",
-          "depth": 4,
-          "rect": { "x": 0, "y": 662, "w": 375, "h": 68 },
-          "semantic": "list-item",
-          "label": "动态列表项3",
-          "confidence": "high",
+          "rect": {
+            "x": 0,
+            "y": 662,
+            "w": 375,
+            "h": 68
+          },
+          "layerType": "frame",
+          "layerName": "动态列表项3",
+          "layerDescription": "动态列表项3",
           "style": {},
           "children": [
-            { "nid": 36, "tag": "img", "depth": 5, "rect": { "x": 16, "y": 676, "w": 40, "h": 40 }, "semantic": "avatar", "label": "用户头像3", "confidence": "high", "style": { "borderRadius": "50%" } },
-            { "nid": 37, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 676, "w": 230, "h": 20 }, "text": "用户名称C", "semantic": "text", "label": "动态用户名3", "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "500" } },
-            { "nid": 38, "tag": "p", "depth": 5, "rect": { "x": 68, "y": 700, "w": 230, "h": 16 }, "text": "评论了你的内容...", "semantic": "text", "label": "动态摘要3", "confidence": "high", "style": { "fontSize": "12px", "color": "rgb(150,150,150)" } },
-            { "nid": 39, "tag": "span", "depth": 5, "rect": { "x": 344, "y": 686, "w": 16, "h": 16 }, "semantic": "icon", "label": "更多操作图标 16×16 细线", "confidence": "high", "style": {} }
+            {
+              "nid": 36,
+              "tag": "img",
+              "rect": {
+                "x": 16,
+                "y": 676,
+                "w": 40,
+                "h": 40
+              },
+              "layerType": "component",
+              "layerName": "用户头像3",
+              "layerDescription": "用户头像3",
+              "style": {
+                "borderRadius": "50%"
+              }
+            },
+            {
+              "nid": 37,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 676,
+                "w": 230,
+                "h": 20
+              },
+              "layerType": "text",
+              "layerName": "动态用户名3",
+              "layerDescription": "动态用户名3",
+              "style": {
+                "fontSize": "14px",
+                "fontWeight": "500"
+              },
+              "text": "用户名称C"
+            },
+            {
+              "nid": 38,
+              "tag": "p",
+              "rect": {
+                "x": 68,
+                "y": 700,
+                "w": 230,
+                "h": 16
+              },
+              "layerType": "text",
+              "layerName": "动态摘要3",
+              "layerDescription": "动态摘要3",
+              "style": {
+                "fontSize": "12px",
+                "color": "rgb(150,150,150)"
+              },
+              "text": "评论了你的内容..."
+            },
+            {
+              "nid": 39,
+              "tag": "span",
+              "rect": {
+                "x": 344,
+                "y": 686,
+                "w": 16,
+                "h": 16
+              },
+              "layerType": "icon",
+              "layerName": "更多操作图标 16×16 细线",
+              "layerDescription": "更多操作图标 16×16 细线",
+              "style": {}
+            }
           ]
         }
       ]
@@ -292,55 +657,241 @@
     {
       "nid": 40,
       "tag": "nav",
-      "depth": 3,
-      "rect": { "x": 0, "y": 746, "w": 375, "h": 66, "fixed": true },
-      "semantic": "tabbar",
-      "label": "底部标签栏",
-      "confidence": "high",
-      "style": { "backgroundColor": "rgb(255,255,255)", "boxShadow": "0px -1px 0px rgba(0,0,0,0.06)" },
+      "rect": {
+        "x": 0,
+        "y": 746,
+        "w": 375,
+        "h": 66,
+        "fixed": true
+      },
+      "layerType": "frame",
+      "layerName": "底部标签栏",
+      "layerDescription": "底部标签栏",
+      "style": {
+        "backgroundColor": "rgb(255,255,255)",
+        "boxShadow": "0px -1px 0px rgba(0,0,0,0.06)"
+      },
       "children": [
         {
-          "nid": 41, "tag": "div", "depth": 4,
-          "rect": { "x": 0, "y": 746, "w": 75, "h": 66 },
-          "semantic": "container", "label": "首页标签", "confidence": "high", "style": {},
+          "nid": 41,
+          "tag": "div",
+          "rect": {
+            "x": 0,
+            "y": 746,
+            "w": 75,
+            "h": 66
+          },
+          "layerType": "frame",
+          "layerName": "首页标签",
+          "layerDescription": "首页标签",
+          "style": {},
           "children": [
-            { "nid": 42, "tag": "span", "depth": 5, "rect": { "x": 25, "y": 752, "w": 24, "h": 24 }, "semantic": "icon", "label": "首页图标 24×24 细线", "confidence": "high", "style": {} },
-            { "nid": 43, "tag": "span", "depth": 5, "rect": { "x": 18, "y": 780, "w": 40, "h": 12 }, "text": "首页", "semantic": "text", "label": "首页标签文字", "confidence": "high", "style": { "fontSize": "10px", "textAlign": "center" } }
+            {
+              "nid": 42,
+              "tag": "span",
+              "rect": {
+                "x": 25,
+                "y": 752,
+                "w": 24,
+                "h": 24
+              },
+              "layerType": "icon",
+              "layerName": "首页图标 24×24 细线",
+              "layerDescription": "首页图标 24×24 细线",
+              "style": {}
+            },
+            {
+              "nid": 43,
+              "tag": "span",
+              "rect": {
+                "x": 18,
+                "y": 780,
+                "w": 40,
+                "h": 12
+              },
+              "layerType": "text",
+              "layerName": "首页标签文字",
+              "layerDescription": "首页标签文字",
+              "style": {
+                "fontSize": "10px",
+                "textAlign": "center"
+              },
+              "text": "首页"
+            }
           ]
         },
         {
-          "nid": 44, "tag": "div", "depth": 4,
-          "rect": { "x": 75, "y": 746, "w": 75, "h": 66 },
-          "semantic": "container", "label": "发现标签", "confidence": "high", "style": {},
+          "nid": 44,
+          "tag": "div",
+          "rect": {
+            "x": 75,
+            "y": 746,
+            "w": 75,
+            "h": 66
+          },
+          "layerType": "frame",
+          "layerName": "发现标签",
+          "layerDescription": "发现标签",
+          "style": {},
           "children": [
-            { "nid": 45, "tag": "span", "depth": 5, "rect": { "x": 100, "y": 752, "w": 24, "h": 24 }, "semantic": "icon", "label": "发现图标 24×24 细线", "confidence": "high", "style": {} },
-            { "nid": 46, "tag": "span", "depth": 5, "rect": { "x": 93, "y": 780, "w": 40, "h": 12 }, "text": "发现", "semantic": "text", "label": "发现标签文字", "confidence": "high", "style": { "fontSize": "10px", "textAlign": "center" } }
+            {
+              "nid": 45,
+              "tag": "span",
+              "rect": {
+                "x": 100,
+                "y": 752,
+                "w": 24,
+                "h": 24
+              },
+              "layerType": "icon",
+              "layerName": "发现图标 24×24 细线",
+              "layerDescription": "发现图标 24×24 细线",
+              "style": {}
+            },
+            {
+              "nid": 46,
+              "tag": "span",
+              "rect": {
+                "x": 93,
+                "y": 780,
+                "w": 40,
+                "h": 12
+              },
+              "layerType": "text",
+              "layerName": "发现标签文字",
+              "layerDescription": "发现标签文字",
+              "style": {
+                "fontSize": "10px",
+                "textAlign": "center"
+              },
+              "text": "发现"
+            }
           ]
         },
         {
-          "nid": 47, "tag": "div", "depth": 4,
-          "rect": { "x": 150, "y": 746, "w": 75, "h": 66 },
-          "semantic": "button", "label": "发布按钮", "confidence": "high", "style": {},
+          "nid": 47,
+          "tag": "div",
+          "rect": {
+            "x": 150,
+            "y": 746,
+            "w": 75,
+            "h": 66
+          },
+          "layerType": "component",
+          "layerName": "发布按钮",
+          "layerDescription": "发布按钮",
+          "style": {},
           "children": [
-            { "nid": 48, "tag": "span", "depth": 5, "rect": { "x": 169, "y": 750, "w": 36, "h": 36 }, "semantic": "icon", "label": "发布图标 36×36 粗线", "confidence": "high", "style": {} }
+            {
+              "nid": 48,
+              "tag": "span",
+              "rect": {
+                "x": 169,
+                "y": 750,
+                "w": 36,
+                "h": 36
+              },
+              "layerType": "icon",
+              "layerName": "发布图标 36×36 粗线",
+              "layerDescription": "发布图标 36×36 粗线",
+              "style": {}
+            }
           ]
         },
         {
-          "nid": 49, "tag": "div", "depth": 4,
-          "rect": { "x": 225, "y": 746, "w": 75, "h": 66 },
-          "semantic": "container", "label": "消息标签", "confidence": "high", "style": {},
+          "nid": 49,
+          "tag": "div",
+          "rect": {
+            "x": 225,
+            "y": 746,
+            "w": 75,
+            "h": 66
+          },
+          "layerType": "frame",
+          "layerName": "消息标签",
+          "layerDescription": "消息标签",
+          "style": {},
           "children": [
-            { "nid": 50, "tag": "span", "depth": 5, "rect": { "x": 250, "y": 752, "w": 24, "h": 24 }, "semantic": "icon", "label": "消息图标 24×24 细线", "confidence": "high", "style": {} },
-            { "nid": 51, "tag": "span", "depth": 5, "rect": { "x": 243, "y": 780, "w": 40, "h": 12 }, "text": "消息", "semantic": "text", "label": "消息标签文字", "confidence": "high", "style": { "fontSize": "10px", "textAlign": "center" } }
+            {
+              "nid": 50,
+              "tag": "span",
+              "rect": {
+                "x": 250,
+                "y": 752,
+                "w": 24,
+                "h": 24
+              },
+              "layerType": "icon",
+              "layerName": "消息图标 24×24 细线",
+              "layerDescription": "消息图标 24×24 细线",
+              "style": {}
+            },
+            {
+              "nid": 51,
+              "tag": "span",
+              "rect": {
+                "x": 243,
+                "y": 780,
+                "w": 40,
+                "h": 12
+              },
+              "layerType": "text",
+              "layerName": "消息标签文字",
+              "layerDescription": "消息标签文字",
+              "style": {
+                "fontSize": "10px",
+                "textAlign": "center"
+              },
+              "text": "消息"
+            }
           ]
         },
         {
-          "nid": 52, "tag": "div", "depth": 4,
-          "rect": { "x": 300, "y": 746, "w": 75, "h": 66 },
-          "semantic": "container", "label": "我的标签", "confidence": "high", "style": {},
+          "nid": 52,
+          "tag": "div",
+          "rect": {
+            "x": 300,
+            "y": 746,
+            "w": 75,
+            "h": 66
+          },
+          "layerType": "frame",
+          "layerName": "我的标签",
+          "layerDescription": "我的标签",
+          "style": {},
           "children": [
-            { "nid": 53, "tag": "span", "depth": 5, "rect": { "x": 325, "y": 752, "w": 24, "h": 24 }, "semantic": "icon", "label": "我的图标 24×24 细线", "confidence": "high", "style": {} },
-            { "nid": 54, "tag": "span", "depth": 5, "rect": { "x": 318, "y": 780, "w": 40, "h": 12 }, "text": "我的", "semantic": "text", "label": "我的标签文字", "confidence": "high", "style": { "fontSize": "10px", "textAlign": "center" } }
+            {
+              "nid": 53,
+              "tag": "span",
+              "rect": {
+                "x": 325,
+                "y": 752,
+                "w": 24,
+                "h": 24
+              },
+              "layerType": "icon",
+              "layerName": "我的图标 24×24 细线",
+              "layerDescription": "我的图标 24×24 细线",
+              "style": {}
+            },
+            {
+              "nid": 54,
+              "tag": "span",
+              "rect": {
+                "x": 318,
+                "y": 780,
+                "w": 40,
+                "h": 12
+              },
+              "layerType": "text",
+              "layerName": "我的标签文字",
+              "layerDescription": "我的标签文字",
+              "style": {
+                "fontSize": "10px",
+                "textAlign": "center"
+              },
+              "text": "我的"
+            }
           ]
         }
       ]

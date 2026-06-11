@@ -20,11 +20,11 @@ Node | Node[]
 |---|---|---|---|
 | `nid` | number | 是 | 节点全局自增 ID，与 step1 styles 文件通过此字段关联 |
 | `tag` | string | 是 | HTML 标签名，小写，如 `div` / `button` / `img` |
-| `depth` | number | 是 | DOM 树深度，根节点为 `2`（html/body 已剥掉）|
 | `rect` | Rect | 是 | 节点绝对坐标和尺寸，见 [Rect](#rect) |
-| `semantic` | string | 是 | LLM 标注的语义类型，见 [SemanticType](#semantictype) |
-| `label` | string | 是 | LLM 标注的可读描述。结合节点 `text`、`class`、`attrs`、父节点语义及页面整体上下文综合判断，描述到具体业务含义。同类节点在同一页面内必须可区分，如 `"登录按钮"` / `"注册按钮"`，不得笼统写 `"按钮"`。**`semantic` 为 `icon` 时还须注明尺寸和线条粗细，如 `"返回图标 24×24 细线"` / `"搜索图标 20×20 中等"`** |
-| `confidence` | string | 是 | LLM 标注置信度：`"high"` 或 `"low"` |
+| `layerType` | string | 是 | **LLM 标注**。图层类型，见 [LayerType](#layertype) |
+| `layerName` | string | 是 | **LLM 标注**。节点语义的简短名称，是 `layerDescription` 的简化版本，如 `"返回按钮"` / `"用户头像"` |
+| `layerDescription` | string | 是 | **LLM 标注**。节点的详细业务描述，说明该节点具体做了什么事情。结合节点 `text`、`class`、`attrs`、父节点及页面整体上下文综合判断，描述到具体业务含义。同类节点在同一页面内必须可区分，如 `"点击后跳转登录页的按钮"` / `"点击后跳转注册页的按钮"`，不得笼统写 `"按钮"`。**`layerType` 为 `icon` 时还须注明尺寸和线条粗细，如 `"返回图标 24×24 细线"`** |
+| `layerConfidence` | string | 否 | **LLM 标注**。标注置信度低时输出 `"low"`，默认（省略）即为 high |
 | `style` | Style | 是 | 内联精简样式，见 [Style](#style)；样式全为默认值时为 `{}` |
 | `id` | string | 否 | 元素 `id` 属性 |
 | `class` | string | 否 | 元素 `class` 属性，截断至 200 字符 |
@@ -62,6 +62,7 @@ Node | Node[]
 
 | 字段 | 类型 | 过滤条件（符合时才输出）|
 |---|---|---|
+| `fontFamily` | string | 始终输出，如 `"PingFang SC"` |
 | `fontSize` | string | 始终输出，如 `"16px"` |
 | `fontWeight` | string | 非 `"400"` |
 | `color` | string | 非 `"rgb(0, 0, 0)"` |
@@ -122,27 +123,15 @@ Node | Node[]
 
 ---
 
-## SemanticType
+## LayerType
 
 | 值 | 含义 |
 |---|---|
-| `navbar` | 顶部导航栏 |
-| `tabbar` | 底部标签栏 |
-| `button` | 可点击按钮 |
-| `icon` | 图标（SVG / img）|
-| `input` | 文本输入框 |
-| `avatar` | 用户头像 |
-| `switch` | 开关控件 |
-| `card` | 内容卡片容器 |
-| `list` | 列表容器 |
-| `list-item` | 列表单项 |
-| `image` | 图片展示区 |
-| `text` | 纯文字节点 |
-| `heading` | 标题文字 |
-| `divider` | 分割线 |
-| `container` | 通用布局容器 |
-| `modal` | 弹层 / 对话框 |
-| `badge` | 角标 / 徽标 |
+| `image` | 图片图层（img 标签或背景图）|
+| `frame` | 布局容器图层（div / section / article 等承担布局职责的节点）|
+| `text` | 纯文字图层 |
+| `icon` | 图标图层（SVG / 字体图标 / 小尺寸 img）|
+| `component` | 组件图层（对应设计系统中可复用的组件，如按钮、输入框、开关等）|
 
 ---
 
@@ -152,25 +141,23 @@ Node | Node[]
 {
   "nid": 3,
   "tag": "div",
-  "depth": 2,
   "rect": { "x": 0, "y": 0, "w": 375, "h": 812 },
   "id": "app",
   "class": "page page--login",
-  "semantic": "container",
-  "label": "登录页根容器",
-  "confidence": "high",
+  "layerType": "frame",
+  "layerName": "登录页根容器",
+  "layerDescription": "登录页面的根布局容器，纵向排列导航栏、表单和底部标签栏",
   "style": { "display": "flex", "flexDirection": "column", "backgroundColor": "rgb(245,245,245)" },
   "children": [
 
     {
       "nid": 4,
       "tag": "header",
-      "depth": 3,
       "rect": { "x": 0, "y": 0, "w": 375, "h": 56, "fixed": true },
       "class": "navbar",
-      "semantic": "navbar",
-      "label": "顶部导航栏",
-      "confidence": "high",
+      "layerType": "frame",
+      "layerName": "顶部导航栏",
+      "layerDescription": "固定在页面顶部的导航栏，包含返回图标和页面标题",
       "style": {
         "display": "flex",
         "alignItems": "center",
@@ -184,24 +171,22 @@ Node | Node[]
         {
           "nid": 5,
           "tag": "span",
-          "depth": 4,
           "rect": { "x": 16, "y": 16, "w": 24, "h": 24 },
           "class": "icon icon--back",
-          "semantic": "icon",
-          "label": "返回图标",
-          "confidence": "high",
+          "layerType": "icon",
+          "layerName": "返回图标",
+          "layerDescription": "点击后返回上一页的图标，24×24 细线",
           "style": { "fontSize": "24px" }
         },
         {
           "nid": 6,
           "tag": "h1",
-          "depth": 4,
           "rect": { "x": 130, "y": 12, "w": 115, "h": 32 },
           "text": "登录",
-          "semantic": "heading",
-          "label": "页面标题",
-          "confidence": "high",
-          "style": { "fontSize": "18px", "fontWeight": "600", "textAlign": "center" }
+          "layerType": "text",
+          "layerName": "页面标题",
+          "layerDescription": "显示当前页面名称"登录"的标题文字",
+          "style": { "fontFamily": "PingFang SC", "fontSize": "18px", "fontWeight": "600", "textAlign": "center" }
         }
       ]
     },
@@ -209,12 +194,11 @@ Node | Node[]
     {
       "nid": 10,
       "tag": "form",
-      "depth": 3,
       "rect": { "x": 20, "y": 80, "w": 335, "h": 360 },
       "class": "login-form",
-      "semantic": "container",
-      "label": "登录表单",
-      "confidence": "high",
+      "layerType": "frame",
+      "layerName": "登录表单",
+      "layerDescription": "包含用户名输入框、密码输入框和登录按钮的表单区域",
       "style": {
         "display": "flex",
         "flexDirection": "column",
@@ -228,12 +212,11 @@ Node | Node[]
         {
           "nid": 11,
           "tag": "div",
-          "depth": 4,
           "rect": { "x": 20, "y": 80, "w": 335, "h": 56 },
           "class": "input-field",
-          "semantic": "input",
-          "label": "用户名输入框",
-          "confidence": "high",
+          "layerType": "component",
+          "layerName": "用户名输入框",
+          "layerDescription": "供用户输入账号名称的文本输入框组件",
           "style": {
             "display": "flex",
             "alignItems": "center",
@@ -245,14 +228,13 @@ Node | Node[]
             {
               "nid": 12,
               "tag": "input",
-              "depth": 5,
               "rect": { "x": 36, "y": 96, "w": 303, "h": 24 },
               "attrs": { "placeholder": "请输入用户名" },
               "type": "text",
-              "semantic": "input",
-              "label": "用户名 input",
-              "confidence": "high",
-              "style": { "fontSize": "16px", "color": "rgb(26,26,26)" }
+              "layerType": "component",
+              "layerName": "用户名 input",
+              "layerDescription": "用户名输入框的原生 input 元素，placeholder 提示"请输入用户名"",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "16px", "color": "rgb(26,26,26)" }
             }
           ]
         },
@@ -260,13 +242,12 @@ Node | Node[]
         {
           "nid": 20,
           "tag": "button",
-          "depth": 4,
           "rect": { "x": 20, "y": 260, "w": 335, "h": 48 },
           "class": "btn btn--primary",
           "text": "登录",
-          "semantic": "button",
-          "label": "主登录按钮",
-          "confidence": "high",
+          "layerType": "component",
+          "layerName": "主登录按钮",
+          "layerDescription": "点击后提交表单并执行登录操作的主要操作按钮",
           "style": {
             "display": "flex",
             "justifyContent": "center",
@@ -282,7 +263,6 @@ Node | Node[]
         {
           "nid": 21,
           "tag": "img",
-          "depth": 4,
           "rect": { "x": 0, "y": 0, "w": 0, "h": 0 },
           "src": "/icons/eye.svg",
           "alt": "",
@@ -290,9 +270,10 @@ Node | Node[]
           "naturalHeight": 24,
           "loaded": true,
           "passthrough": true,
-          "semantic": "icon",
-          "label": "密码可见切换图标",
-          "confidence": "low",
+          "layerType": "icon",
+          "layerName": "密码可见图标",
+          "layerDescription": "点击后切换密码输入框明文/密文显示状态的图标",
+          "layerConfidence": "low",
           "style": {}
         }
 
@@ -302,12 +283,11 @@ Node | Node[]
     {
       "nid": 30,
       "tag": "nav",
-      "depth": 3,
       "rect": { "x": 0, "y": 746, "w": 375, "h": 66, "fixed": true },
       "class": "tabbar",
-      "semantic": "tabbar",
-      "label": "底部标签栏",
-      "confidence": "high",
+      "layerType": "frame",
+      "layerName": "底部标签栏",
+      "layerDescription": "固定在页面底部的导航标签栏，用于在多个主页面之间切换",
       "style": {
         "display": "flex",
         "justifyContent": "space-around",

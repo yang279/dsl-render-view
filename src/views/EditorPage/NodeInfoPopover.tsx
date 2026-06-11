@@ -1,14 +1,10 @@
 import { defineComponent, ref, watch, computed, Transition } from 'vue'
 import type { PropType } from 'vue'
 import { ElSelect, ElOption, ElInput } from 'element-plus'
-import type { DslNode, SemanticType } from '@/types/dsl'
+import type { DslNode, LayerType } from '@/types/dsl'
 import { useDslStore } from '@/stores/dsl'
 
-const SEMANTIC_OPTIONS: SemanticType[] = [
-  'navbar', 'tabbar', 'button', 'icon', 'input', 'avatar', 'switch',
-  'card', 'list', 'list-item', 'image', 'text', 'heading', 'divider',
-  'container', 'modal', 'badge',
-]
+const LAYER_OPTIONS: LayerType[] = ['frame', 'component', 'text', 'image', 'icon']
 
 interface Position { x: number; y: number }
 
@@ -24,23 +20,22 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useDslStore()
 
-    const name = ref('')
-    const desc = ref('')
+    const layerName        = ref('')
+    const layerDescription = ref('')
 
-    // Sync local text fields only when node switches (avoids cursor-jump on every keystroke)
     watch(() => props.node?.nid, () => {
-      name.value = props.node?.label ?? ''
-      desc.value = props.node?.description ?? ''
+      layerName.value        = props.node?.layerName        ?? ''
+      layerDescription.value = props.node?.layerDescription ?? ''
     }, { immediate: true })
 
-    function saveType(semantic: string) {
+    function saveType(layerType: string) {
       if (!props.node) return
-      store.updateNodeMeta(props.node.nid, semantic, name.value, desc.value)
+      store.updateNodeMeta(props.node.nid, layerType, layerName.value, layerDescription.value)
     }
 
     function saveText() {
       if (!props.node) return
-      store.updateNodeMeta(props.node.nid, props.node.semantic, name.value, desc.value)
+      store.updateNodeMeta(props.node.nid, props.node.layerType, layerName.value, layerDescription.value)
     }
 
     const popoverStyle = computed(() => {
@@ -82,37 +77,37 @@ export default defineComponent({
 
             <div class="px-3 py-3 flex flex-col gap-2.5">
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-gray-400">type</label>
+                <label class="text-xs text-gray-400">layerType</label>
                 <ElSelect
-                  modelValue={props.node.semantic}
+                  modelValue={props.node.layerType}
                   size="small"
                   style={{ width: '100%' }}
                   onChange={(val: string) => saveType(val)}
                 >
-                  {SEMANTIC_OPTIONS.map(opt => (
+                  {LAYER_OPTIONS.map(opt => (
                     <ElOption key={opt} label={opt} value={opt} />
                   ))}
                 </ElSelect>
               </div>
 
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-gray-400">name</label>
+                <label class="text-xs text-gray-400">layerName</label>
                 <ElInput
-                  modelValue={name.value}
+                  modelValue={layerName.value}
                   size="small"
-                  onInput={(val: string) => { name.value = val; saveText() }}
+                  onInput={(val: string) => { layerName.value = val; saveText() }}
                 />
               </div>
 
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-gray-400">description</label>
+                <label class="text-xs text-gray-400">layerDescription</label>
                 <ElInput
-                  modelValue={desc.value}
+                  modelValue={layerDescription.value}
                   size="small"
                   type="textarea"
                   rows={2}
                   resize="none"
-                  onInput={(val: string) => { desc.value = val; saveText() }}
+                  onInput={(val: string) => { layerDescription.value = val; saveText() }}
                 />
               </div>
             </div>

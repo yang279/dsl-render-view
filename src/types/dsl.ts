@@ -6,33 +6,21 @@ export interface Rect {
   fixed?: boolean
 }
 
-export type SemanticType =
-  | 'navbar'
-  | 'tabbar'
-  | 'button'
-  | 'icon'
-  | 'input'
-  | 'avatar'
-  | 'switch'
-  | 'card'
-  | 'list'
-  | 'list-item'
+export type LayerType =
   | 'image'
+  | 'frame'
   | 'text'
-  | 'heading'
-  | 'divider'
-  | 'container'
-  | 'modal'
-  | 'badge'
+  | 'icon'
+  | 'component'
 
 export interface DslNode {
   nid: number
   tag: string
-  depth: number
   rect: Rect
-  semantic: SemanticType | string
-  label: string
-  confidence: 'high' | 'low'
+  layerType: LayerType | string
+  layerName: string
+  layerDescription: string
+  layerConfidence?: 'low'
   style: Record<string, string>
   id?: string
   class?: string
@@ -46,6 +34,5 @@ export interface DslNode {
   naturalHeight?: number
   loaded?: boolean
   passthrough?: boolean
-  description?: string
   children?: DslNode[]
 }

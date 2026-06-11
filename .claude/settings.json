@@ -21,7 +21,8 @@
       "Bash(find /Users/ucd/Desktop/hex-render-view -name \"node-dsl.md\" 2>/dev/null; ls /Users/ucd/Desktop/)",
       "Read(//Users/ucd/Desktop/**)",
       "Bash(node -e ' *)",
-      "Bash(pkill -f \"vite --port 5199\")"
+      "Bash(pkill -f \"vite --port 5199\")",
+      "Bash(npx tsc *)"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import type { DslNode } from '@/types/dsl'
 
 function findNode(nodes: DslNode[], nid: number): DslNode | null {
@@ -17,20 +17,18 @@ export const useDslStore = defineStore('dsl', () => {
   const nodes      = ref<DslNode[]>([])
   const sourceName = ref('')
 
-  const hasNodes = computed(() => nodes.value.length > 0)
-
   function setNodes(data: DslNode[], name = '') {
     nodes.value = data
     sourceName.value = name
   }
 
-  function updateNodeMeta(nid: number, semantic: string, label: string, description: string) {
+  function updateNodeMeta(nid: number, layerType: string, layerName: string, layerDescription: string) {
     const node = findNode(nodes.value, nid)
     if (!node) return
-    node.semantic = semantic
-    node.label = label
-    node.description = description
+    node.layerType        = layerType
+    node.layerName        = layerName
+    node.layerDescription = layerDescription
   }
 
-  return { nodes, sourceName, hasNodes, setNodes, updateNodeMeta }
+  return { nodes, sourceName, setNodes, updateNodeMeta }
 })

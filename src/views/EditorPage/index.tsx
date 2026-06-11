@@ -34,6 +34,7 @@ export default defineComponent({
           nodes={store.nodes}
           selectedNid={selectedNode.value?.nid}
           onNodeClick={onNodeClick}
+          onScroll={() => { selectedNode.value = null; popoverPos.value = null }}
         />
         <NodeInfoPopover
           node={selectedNode.value}

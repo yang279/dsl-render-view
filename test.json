@@ -8,386 +8,491 @@
     "h": 812
   },
   "layerType": "frame",
-  "layerName": "登录页根容器",
-  "layerDescription": "登录页面的根布局容器，垂直排列 Logo 区、表单卡片和底部提示",
+  "layerName": "设置页根容器",
+  "layerDescription": "个人设置页面的根布局容器，纵向排列导航栏和设置内容区域",
   "style": {
     "display": "flex",
     "flexDirection": "column",
-    "alignItems": "center",
     "backgroundColor": "#F5F5F5FF"
   },
   "children": [
     {
       "nid": 2,
-      "tag": "div",
+      "tag": "header",
       "rect": {
-        "x": 147,
-        "y": 80,
-        "w": 80,
-        "h": 140
+        "x": 0,
+        "y": 0,
+        "w": 375,
+        "h": 56,
+        "fixed": true
       },
       "layerType": "frame",
-      "layerName": "Logo 区",
-      "layerDescription": "包含应用 Logo 图标和应用名称的容器区域",
+      "layerName": "顶部导航栏",
+      "layerDescription": "固定在页面顶部的导航栏，包含返回图标和页面标题",
       "style": {
         "display": "flex",
-        "flexDirection": "column",
         "alignItems": "center",
-        "gap": "12px"
+        "justifyContent": "center",
+        "position": "fixed",
+        "top": "0px",
+        "zIndex": "100",
+        "backgroundColor": "#FFFFFFFF",
+        "boxShadow": "0px 1px 0px rgba(0,0,0,0.08)"
       },
       "children": [
         {
           "nid": 3,
-          "tag": "div",
+          "tag": "span",
           "rect": {
-            "x": 147,
-            "y": 80,
-            "w": 80,
-            "h": 80
+            "x": 16,
+            "y": 16,
+            "w": 24,
+            "h": 24
           },
+          "class": "icon icon--back",
           "layerType": "icon",
-          "layerName": "应用 Logo",
-          "layerDescription": "应用的品牌 Logo 图标，80×80",
+          "layerName": "返回图标",
+          "layerDescription": "点击后返回上一页的箭头图标，24×24 细线",
           "style": {
-            "borderRadius": "16px",
-            "backgroundColor": "#3478F6FF"
+            "fontSize": "24px",
+            "color": "#1A1A1AFF"
           }
         },
         {
           "nid": 4,
           "tag": "h1",
           "rect": {
-            "x": 147,
-            "y": 172,
-            "w": 80,
+            "x": 130,
+            "y": 12,
+            "w": 115,
             "h": 32
           },
-          "text": "App Name",
+          "text": "设置",
           "layerType": "text",
-          "layerName": "应用名称",
-          "layerDescription": "应用的名称标题文字",
+          "layerName": "页面标题",
+          "layerDescription": "显示当前页面名称「设置」的标题文字",
           "style": {
             "fontFamily": "PingFang SC",
-            "fontSize": "24px",
-            "fontWeight": "700",
-            "color": "#1A1A1AFF",
-            "textAlign": "center"
+            "fontSize": "18px",
+            "fontWeight": "600",
+            "textAlign": "center",
+            "color": "#1A1A1AFF"
           }
         }
       ]
     },
     {
       "nid": 5,
-      "tag": "form",
+      "tag": "div",
       "rect": {
         "x": 20,
-        "y": 250,
+        "y": 80,
         "w": 335,
-        "h": 320
+        "h": 600
       },
       "layerType": "frame",
-      "layerName": "登录表单卡片",
-      "layerDescription": "包含登录标题、用户名输入框、密码输入框和登录按钮的表单卡片",
+      "layerName": "设置内容区域",
+      "layerDescription": "包含所有设置项的滚动内容区域",
       "style": {
         "display": "flex",
         "flexDirection": "column",
-        "alignItems": "center",
-        "gap": "16px",
-        "backgroundColor": "#FFFFFFFF",
-        "borderRadius": "16px",
-        "boxShadow": "0px 8px 24px rgba(0,0,0,0.08)"
+        "gap": "16px"
       },
       "children": [
         {
           "nid": 6,
-          "tag": "h2",
+          "tag": "div",
           "rect": {
             "x": 20,
-            "y": 266,
+            "y": 80,
             "w": 335,
-            "h": 28
+            "h": 24
           },
-          "text": "登录",
+          "text": "账户",
           "layerType": "text",
-          "layerName": "表单标题",
-          "layerDescription": "显示\"登录\"的表单标题文字",
+          "layerName": "账户分组标题",
+          "layerDescription": "账户相关设置的分组标题文字",
           "style": {
             "fontFamily": "PingFang SC",
-            "fontSize": "20px",
+            "fontSize": "16px",
             "fontWeight": "600",
-            "color": "#1A1A1AFF",
-            "textAlign": "center"
+            "color": "#1A1A1AFF"
           }
         },
         {
           "nid": 7,
           "tag": "div",
           "rect": {
-            "x": 40,
-            "y": 310,
-            "w": 295,
-            "h": 48
+            "x": 20,
+            "y": 112,
+            "w": 335,
+            "h": 160
           },
-          "layerType": "component",
-          "layerName": "用户名输入框",
-          "layerDescription": "供用户输入账号名称或邮箱的文本输入框组件",
+          "layerType": "frame",
+          "layerName": "账户设置卡片",
+          "layerDescription": "包含个人信息、修改密码、退出登录三个设置项的卡片容器",
           "style": {
-            "display": "flex",
-            "alignItems": "center",
-            "backgroundColor": "#FAFAFAFF",
-            "border": "1px solid #E5E5E5FF",
-            "borderRadius": "8px"
+            "backgroundColor": "#FFFFFFFF",
+            "borderRadius": "12px",
+            "boxShadow": "0px 2px 8px rgba(0,0,0,0.08)"
           },
           "children": [
             {
               "nid": 8,
-              "tag": "input",
+              "tag": "div",
               "rect": {
-                "x": 52,
-                "y": 322,
-                "w": 271,
-                "h": 24
+                "x": 32,
+                "y": 124,
+                "w": 311,
+                "h": 48
               },
-              "type": "text",
-              "attrs": {
-                "placeholder": "请输入用户名或邮箱"
-              },
-              "layerType": "component",
-              "layerName": "用户名 input",
-              "layerDescription": "用户名输入框的原生 input 元素，placeholder 提示\"请输入用户名或邮箱\"",
+              "layerType": "frame",
+              "layerName": "个人信息设置项",
+              "layerDescription": "点击后进入个人信息编辑页面的设置项",
               "style": {
-                "fontFamily": "PingFang SC",
-                "fontSize": "16px",
-                "color": "#1A1A1AFF",
-                "backgroundColor": "transparent",
-                "border": "none"
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "space-between"
               },
-              "component": {
-                "source": "ict-ui",
-                "sourceLabel": "ICT UI 组件库",
-                "componentSetName": "对话框示例",
-                "componentKey": "8ffef7f13543cc88c2645356ee150cddd513e938",
-                "hexFile": "component/8ffef7f13543cc88c2645356ee150cddd513e938.txt",
-                "path": "ict-ui/component/8ffef7f13543cc88c2645356ee150cddd513e938.txt",
-                "variant": {
-                  "name": "type=input,modal=true",
-                  "variantKey": "c1d7c90ade9fd5fb6ad1fc00e606ae6e599d2e8a",
-                  "guid": "5562:283009"
+              "children": [
+                {
+                  "nid": 9,
+                  "tag": "span",
+                  "rect": {
+                    "x": 32,
+                    "y": 136,
+                    "w": 80,
+                    "h": 24
+                  },
+                  "text": "个人信息",
+                  "layerType": "text",
+                  "layerName": "个人信息文字",
+                  "layerDescription": "显示「个人信息」的设置项文字",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "16px",
+                    "color": "#1A1A1AFF"
+                  }
                 },
-                "reason": "算法兜底（LLM 未返回有效结果）",
-                "fallback": true
-              }
-            }
-          ],
-          "component": {
-            "source": "ict-ui",
-            "sourceLabel": "ICT UI 组件库",
-            "componentSetName": "1.单行文本输入框",
-            "componentKey": "877809c8244fba071a3d111c1cfc92c230130da7",
-            "hexFile": "component/877809c8244fba071a3d111c1cfc92c230130da7.txt",
-            "path": "ict-ui/component/877809c8244fba071a3d111c1cfc92c230130da7.txt",
-            "variant": {
-              "name": "type=text, Interaction=hover, size=normal, disabled=false",
-              "variantKey": "79f6f7787074805b693169ba31f3b9720924a85e",
-              "guid": "9955:327084"
-            },
-            "reason": "算法兜底（LLM 未返回有效结果）",
-            "fallback": true
-          }
-        },
-        {
-          "nid": 9,
-          "tag": "div",
-          "rect": {
-            "x": 40,
-            "y": 374,
-            "w": 295,
-            "h": 48
-          },
-          "layerType": "component",
-          "layerName": "密码输入框",
-          "layerDescription": "供用户输入登录密码的密码输入框组件",
-          "style": {
-            "display": "flex",
-            "alignItems": "center",
-            "backgroundColor": "#FAFAFAFF",
-            "border": "1px solid #E5E5E5FF",
-            "borderRadius": "8px"
-          },
-          "children": [
-            {
-              "nid": 10,
-              "tag": "input",
-              "rect": {
-                "x": 52,
-                "y": 386,
-                "w": 239,
-                "h": 24
-              },
-              "type": "password",
-              "attrs": {
-                "placeholder": "请输入密码"
-              },
-              "layerType": "component",
-              "layerName": "密码 input",
-              "layerDescription": "密码输入框的原生 input 元素，placeholder 提示\"请输入密码\"",
-              "style": {
-                "fontFamily": "PingFang SC",
-                "fontSize": "16px",
-                "color": "#1A1A1AFF",
-                "backgroundColor": "transparent",
-                "border": "none"
-              },
-              "component": {
-                "source": "ict-ui",
-                "sourceLabel": "ICT UI 组件库",
-                "componentSetName": "对话框示例",
-                "componentKey": "8ffef7f13543cc88c2645356ee150cddd513e938",
-                "hexFile": "component/8ffef7f13543cc88c2645356ee150cddd513e938.txt",
-                "path": "ict-ui/component/8ffef7f13543cc88c2645356ee150cddd513e938.txt",
-                "variant": {
-                  "name": "type=input,modal=true",
-                  "variantKey": "c1d7c90ade9fd5fb6ad1fc00e606ae6e599d2e8a",
-                  "guid": "5562:283009"
-                },
-                "reason": "算法兜底（LLM 未返回有效结果）",
-                "fallback": true
-              }
+                {
+                  "nid": 10,
+                  "tag": "span",
+                  "rect": {
+                    "x": 319,
+                    "y": 136,
+                    "w": 24,
+                    "h": 24
+                  },
+                  "class": "icon icon--arrow-right",
+                  "layerType": "icon",
+                  "layerName": "右箭头图标",
+                  "layerDescription": "指示可点击进入下一级页面的箭头图标，24×24 细线",
+                  "style": {
+                    "fontSize": "24px",
+                    "color": "#999999FF"
+                  }
+                }
+              ]
             },
             {
               "nid": 11,
               "tag": "div",
               "rect": {
-                "x": 303,
-                "y": 386,
-                "w": 24,
-                "h": 24
+                "x": 32,
+                "y": 172,
+                "w": 311,
+                "h": 48
               },
-              "layerType": "icon",
-              "layerName": "密码可见图标",
-              "layerDescription": "点击切换密码明文/密文显示状态的图标，24×24 细线",
+              "layerType": "frame",
+              "layerName": "修改密码设置项",
+              "layerDescription": "点击后进入修改密码页面的设置项",
               "style": {
-                "color": "#999999FF"
-              }
-            }
-          ],
-          "component": {
-            "source": "ict-ui",
-            "sourceLabel": "ICT UI 组件库",
-            "componentSetName": "1.单行文本输入框",
-            "componentKey": "877809c8244fba071a3d111c1cfc92c230130da7",
-            "hexFile": "component/877809c8244fba071a3d111c1cfc92c230130da7.txt",
-            "path": "ict-ui/component/877809c8244fba071a3d111c1cfc92c230130da7.txt",
-            "variant": {
-              "name": "type=text, Interaction=hover, size=normal, disabled=false",
-              "variantKey": "79f6f7787074805b693169ba31f3b9720924a85e",
-              "guid": "9955:327084"
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "space-between"
+              },
+              "children": [
+                {
+                  "nid": 12,
+                  "tag": "span",
+                  "rect": {
+                    "x": 32,
+                    "y": 184,
+                    "w": 80,
+                    "h": 24
+                  },
+                  "text": "修改密码",
+                  "layerType": "text",
+                  "layerName": "修改密码文字",
+                  "layerDescription": "显示「修改密码」的设置项文字",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "16px",
+                    "color": "#1A1A1AFF"
+                  }
+                },
+                {
+                  "nid": 13,
+                  "tag": "span",
+                  "rect": {
+                    "x": 319,
+                    "y": 184,
+                    "w": 24,
+                    "h": 24
+                  },
+                  "class": "icon icon--arrow-right",
+                  "layerType": "icon",
+                  "layerName": "右箭头图标",
+                  "layerDescription": "指示可点击进入下一级页面的箭头图标，24×24 细线",
+                  "style": {
+                    "fontSize": "24px",
+                    "color": "#999999FF"
+                  }
+                }
+              ]
             },
-            "reason": "算法兜底（LLM 未返回有效结果）",
-            "fallback": true
-          }
+            {
+              "nid": 14,
+              "tag": "div",
+              "rect": {
+                "x": 32,
+                "y": 220,
+                "w": 311,
+                "h": 48
+              },
+              "layerType": "frame",
+              "layerName": "退出登录设置项",
+              "layerDescription": "点击后退出当前账号的设置项",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "space-between"
+              },
+              "children": [
+                {
+                  "nid": 15,
+                  "tag": "span",
+                  "rect": {
+                    "x": 32,
+                    "y": 232,
+                    "w": 80,
+                    "h": 24
+                  },
+                  "text": "退出登录",
+                  "layerType": "text",
+                  "layerName": "退出登录文字",
+                  "layerDescription": "显示「退出登录」的设置项文字，使用红色表示警示",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "16px",
+                    "color": "#EF4444FF"
+                  }
+                },
+                {
+                  "nid": 16,
+                  "tag": "span",
+                  "rect": {
+                    "x": 319,
+                    "y": 232,
+                    "w": 24,
+                    "h": 24
+                  },
+                  "class": "icon icon--arrow-right",
+                  "layerType": "icon",
+                  "layerName": "右箭头图标",
+                  "layerDescription": "指示可点击退出账号的箭头图标，24×24 细线，红色警示",
+                  "style": {
+                    "fontSize": "24px",
+                    "color": "#EF4444FF"
+                  }
+                }
+              ]
+            }
+          ]
         },
         {
-          "nid": 12,
-          "tag": "button",
+          "nid": 17,
+          "tag": "div",
           "rect": {
-            "x": 40,
-            "y": 438,
-            "w": 295,
-            "h": 48
+            "x": 20,
+            "y": 288,
+            "w": 335,
+            "h": 24
           },
-          "text": "登录",
-          "layerType": "component",
-          "layerName": "主登录按钮",
-          "layerDescription": "点击后提交表单并执行登录操作的主要操作按钮",
+          "text": "偏好",
+          "layerType": "text",
+          "layerName": "偏好分组标题",
+          "layerDescription": "偏好相关设置的分组标题文字",
           "style": {
-            "display": "flex",
-            "justifyContent": "center",
-            "alignItems": "center",
-            "backgroundColor": "#3478F6FF",
-            "borderRadius": "8px",
+            "fontFamily": "PingFang SC",
             "fontSize": "16px",
             "fontWeight": "600",
-            "color": "#FFFFFFFF"
-          },
-          "component": {
-            "source": "h-design-chart",
-            "sourceLabel": "H Design 图表库",
-            "componentSetName": ".功能区",
-            "componentKey": "771:64782",
-            "hexFile": "component/771_64782.txt",
-            "path": "h-design-chart/component/771_64782.txt",
-            "variant": {
-              "name": "类型=综合按钮",
-              "variantKey": "762:62956",
-              "guid": "762:62956"
-            },
-            "reason": "算法兜底（LLM 未返回有效结果）",
-            "fallback": true
-          }
-        }
-      ]
-    },
-    {
-      "nid": 13,
-      "tag": "div",
-      "rect": {
-        "x": 0,
-        "y": 590,
-        "w": 375,
-        "h": 60
-      },
-      "layerType": "frame",
-      "layerName": "底部提示区",
-      "layerDescription": "包含忘记密码和注册账号链接的底部区域",
-      "style": {
-        "display": "flex",
-        "flexDirection": "column",
-        "alignItems": "center",
-        "gap": "12px"
-      },
-      "children": [
-        {
-          "nid": 14,
-          "tag": "a",
-          "rect": {
-            "x": 137,
-            "y": 590,
-            "w": 100,
-            "h": 24
-          },
-          "text": "忘记密码？",
-          "href": "/forgot-password",
-          "layerType": "text",
-          "layerName": "忘记密码链接",
-          "layerDescription": "点击跳转到找回密码页面的链接文字",
-          "style": {
-            "fontFamily": "PingFang SC",
-            "fontSize": "14px",
-            "color": "#3478F6FF",
-            "textAlign": "center"
+            "color": "#1A1A1AFF"
           }
         },
         {
-          "nid": 15,
-          "tag": "a",
+          "nid": 18,
+          "tag": "div",
           "rect": {
-            "x": 137,
-            "y": 626,
-            "w": 100,
-            "h": 24
+            "x": 20,
+            "y": 320,
+            "w": 335,
+            "h": 112
           },
-          "text": "注册账号",
-          "href": "/register",
-          "layerType": "text",
-          "layerName": "注册账号链接",
-          "layerDescription": "点击跳转到注册页面的链接文字",
+          "layerType": "frame",
+          "layerName": "偏好设置卡片",
+          "layerDescription": "包含通知开关、主题选择两个设置项的卡片容器",
           "style": {
-            "fontFamily": "PingFang SC",
-            "fontSize": "14px",
-            "color": "#3478F6FF",
-            "textAlign": "center"
-          }
+            "backgroundColor": "#FFFFFFFF",
+            "borderRadius": "12px",
+            "boxShadow": "0px 2px 8px rgba(0,0,0,0.08)"
+          },
+          "children": [
+            {
+              "nid": 19,
+              "tag": "div",
+              "rect": {
+                "x": 32,
+                "y": 332,
+                "w": 311,
+                "h": 48
+              },
+              "layerType": "frame",
+              "layerName": "通知设置项",
+              "layerDescription": "用于开启或关闭应用通知的开关设置项",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "space-between"
+              },
+              "children": [
+                {
+                  "nid": 20,
+                  "tag": "span",
+                  "rect": {
+                    "x": 32,
+                    "y": 344,
+                    "w": 48,
+                    "h": 24
+                  },
+                  "text": "通知",
+                  "layerType": "text",
+                  "layerName": "通知文字",
+                  "layerDescription": "显示「通知」的设置项文字",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "16px",
+                    "color": "#1A1A1AFF"
+                  }
+                },
+                {
+                  "nid": 21,
+                  "tag": "div",
+                  "rect": {
+                    "x": 295,
+                    "y": 344,
+                    "w": 48,
+                    "h": 24
+                  },
+                  "layerType": "component",
+                  "layerName": "通知开关",
+                  "layerDescription": "控制通知开启/关闭状态的开关组件",
+                  "style": {},
+                  "component": {
+                    "source": "ict-ui",
+                    "sourceLabel": "ICT UI 组件库",
+                    "componentSetName": "1.开关-基础样式",
+                    "componentKey": "666792a585576efe10ca93fe9ebc595b44211fdc",
+                    "hexFile": "component/666792a585576efe10ca93fe9ebc595b44211fdc.txt",
+                    "path": "ict-ui/component/666792a585576efe10ca93fe9ebc595b44211fdc.txt",
+                    "variant": {
+                      "name": "toggled=false, disabled=true, _type=icon, _loading=false",
+                      "variantKey": "f496aa189c4ea7ac20ffe7f99bf469c7f43fb2f7",
+                      "guid": "4625:44686"
+                    },
+                    "reason": "算法兜底（LLM 未返回有效结果）",
+                    "fallback": true
+                  }
+                }
+              ]
+            },
+            {
+              "nid": 22,
+              "tag": "div",
+              "rect": {
+                "x": 32,
+                "y": 380,
+                "w": 311,
+                "h": 48
+              },
+              "layerType": "frame",
+              "layerName": "主题设置项",
+              "layerDescription": "用于切换应用主题风格的设置项",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "space-between"
+              },
+              "children": [
+                {
+                  "nid": 23,
+                  "tag": "span",
+                  "rect": {
+                    "x": 32,
+                    "y": 392,
+                    "w": 48,
+                    "h": 24
+                  },
+                  "text": "主题",
+                  "layerType": "text",
+                  "layerName": "主题文字",
+                  "layerDescription": "显示「主题」的设置项文字",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "16px",
+                    "color": "#1A1A1AFF"
+                  }
+                },
+                {
+                  "nid": 24,
+                  "tag": "span",
+                  "rect": {
+                    "x": 200,
+                    "y": 392,
+                    "w": 48,
+                    "h": 24
+                  },
+                  "text": "浅色",
+                  "layerType": "text",
+                  "layerName": "当前主题值",
+                  "layerDescription": "显示当前选中的主题值「浅色」",
+                  "style": {
+                    "fontFamily": "PingFang SC",
+                    "fontSize": "14px",
+                    "color": "#666666FF"
+                  }
+                },
+                {
+                  "nid": 25,
+                  "tag": "span",
+                  "rect": {
+                    "x": 319,
+                    "y": 392,
+                    "w": 24,
+                    "h": 24
+                  },
+                  "class": "icon icon--arrow-right",
+                  "layerType": "icon",
+                  "layerName": "右箭头图标",
+                  "layerDescription": "指示可点击进入主题选择页面的箭头图标，24×24 细线",
+                  "style": {
+                    "fontSize": "24px",
+                    "color": "#999999FF"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

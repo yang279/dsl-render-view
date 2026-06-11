@@ -38,15 +38,20 @@ export default defineComponent({
       store.updateNodeMeta(props.node.nid, props.node.layerType, layerName.value, layerDescription.value)
     }
 
+    const H = 220 // estimated popover height
+
     const popoverStyle = computed(() => {
       if (!props.position) return {}
       const vw = window.innerWidth
       const vh = window.innerHeight
+      // Horizontal: prefer right of click, flip left if overflow
       let x = props.position.x + 12
-      let y = props.position.y - 12
       if (x + W > vw - 8) x = props.position.x - W - 12
-      if (y < 8) y = 8
-      if (y > vh - 240) y = vh - 240
+      x = Math.max(8, x)
+      // Vertical: prefer below click, flip above if overflow
+      let y = props.position.y + 12
+      if (y + H > vh - 8) y = props.position.y - H - 12
+      y = Math.max(8, y)
       return { left: `${x}px`, top: `${y}px`, width: `${W}px` }
     })
 

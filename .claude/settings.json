@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -s http://localhost:5174)",
+      "Bash(pkill -f \"vite --port 5174\")",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --screenshot=/tmp/hex-render-screenshot.png --window-size=1440,900 http://localhost:5174)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless=new --screenshot=/tmp/hex-step1.png --window-size=1440,900 http://localhost:5174)",
+      "Bash(npx playwright@1.60.0 --yes)",
+      "Bash(node /tmp/click-node.mjs)",
+      "Bash(npx playwright *)",
+      "Bash(node -e \"import\\('@playwright/test'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\)\")",
+      "Bash(node --input-type=module)",
+      "Bash(find /Users/ucd/Desktop/hex-render-view -name \"node-dsl.md\" 2>/dev/null; ls /Users/ucd/Desktop/)",
+      "Read(//Users/ucd/Desktop/**)",
+      "Bash(node -e ' *)",
+      "Bash(pkill -f \"vite --port 5199\")"
+    ]
+  }
+}

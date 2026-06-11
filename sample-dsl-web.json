@@ -1,0 +1,272 @@
+{
+  "nid": 1,
+  "tag": "div",
+  "depth": 2,
+  "rect": { "x": 0, "y": 0, "w": 1440, "h": 2000 },
+  "semantic": "container",
+  "label": "Web首页根容器",
+  "confidence": "high",
+  "style": { "backgroundColor": "rgb(255,255,255)" },
+  "children": [
+
+    {
+      "nid": 2,
+      "tag": "header",
+      "depth": 3,
+      "rect": { "x": 0, "y": 0, "w": 1440, "h": 64, "fixed": true },
+      "semantic": "navbar",
+      "label": "顶部导航栏",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(255,255,255)", "boxShadow": "0px 1px 0px rgba(0,0,0,0.08)", "display": "flex", "alignItems": "center" },
+      "children": [
+        { "nid": 3,  "tag": "img",  "depth": 4, "rect": { "x": 40,   "y": 16, "w": 120, "h": 32 }, "semantic": "image",  "label": "Logo图片",        "confidence": "high", "style": {} },
+        { "nid": 4,  "tag": "span", "depth": 4, "rect": { "x": 500,  "y": 20, "w": 60,  "h": 24 }, "semantic": "text",   "label": "导航链接-首页",   "confidence": "high", "style": { "fontSize": "14px" }, "text": "首页" },
+        { "nid": 5,  "tag": "span", "depth": 4, "rect": { "x": 592,  "y": 20, "w": 60,  "h": 24 }, "semantic": "text",   "label": "导航链接-产品",   "confidence": "high", "style": { "fontSize": "14px" }, "text": "产品" },
+        { "nid": 6,  "tag": "span", "depth": 4, "rect": { "x": 684,  "y": 20, "w": 60,  "h": 24 }, "semantic": "text",   "label": "导航链接-方案",   "confidence": "high", "style": { "fontSize": "14px" }, "text": "方案" },
+        { "nid": 7,  "tag": "span", "depth": 4, "rect": { "x": 776,  "y": 20, "w": 60,  "h": 24 }, "semantic": "text",   "label": "导航链接-定价",   "confidence": "high", "style": { "fontSize": "14px" }, "text": "定价" },
+        { "nid": 8,  "tag": "span", "depth": 4, "rect": { "x": 868,  "y": 20, "w": 60,  "h": 24 }, "semantic": "text",   "label": "导航链接-文档",   "confidence": "high", "style": { "fontSize": "14px" }, "text": "文档" },
+        { "nid": 9,  "tag": "div",  "depth": 4, "rect": { "x": 1100, "y": 16, "w": 200, "h": 32 }, "semantic": "input",  "label": "顶部搜索框",      "confidence": "high", "style": { "borderRadius": "6px", "backgroundColor": "rgb(246,246,246)" } },
+        { "nid": 10, "tag": "span", "depth": 4, "rect": { "x": 1316, "y": 20, "w": 24,  "h": 24 }, "semantic": "icon",   "label": "消息通知图标 24×24 细线", "confidence": "high", "style": {} },
+        { "nid": 11, "tag": "div",  "depth": 4, "rect": { "x": 1360, "y": 12, "w": 40,  "h": 40 }, "semantic": "avatar", "label": "用户头像",        "confidence": "high", "style": { "borderRadius": "50%" } }
+      ]
+    },
+
+    {
+      "nid": 12,
+      "tag": "section",
+      "depth": 3,
+      "rect": { "x": 0, "y": 64, "w": 1440, "h": 480 },
+      "semantic": "container",
+      "label": "Hero区域",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(248,250,252)" },
+      "children": [
+        { "nid": 13, "tag": "img",    "depth": 4, "rect": { "x": 680, "y": 64,  "w": 760, "h": 480 }, "semantic": "image",  "label": "Hero背景插图",    "confidence": "high", "style": {} },
+        { "nid": 14, "tag": "span",   "depth": 4, "rect": { "x": 120, "y": 140, "w": 88,  "h": 28  }, "semantic": "badge",  "label": "新功能角标",      "confidence": "high", "style": { "backgroundColor": "rgb(239,246,255)", "borderRadius": "14px", "fontSize": "12px" }, "text": "✨ 新功能" },
+        { "nid": 15, "tag": "h1",     "depth": 4, "rect": { "x": 120, "y": 184, "w": 540, "h": 96  }, "semantic": "heading","label": "Hero主标题",      "confidence": "high", "style": { "fontSize": "48px", "fontWeight": "700", "lineHeight": "1.2" }, "text": "打造更好的数字协作体验" },
+        { "nid": 16, "tag": "p",      "depth": 4, "rect": { "x": 120, "y": 296, "w": 480, "h": 60  }, "semantic": "text",   "label": "Hero副标题",      "confidence": "high", "style": { "fontSize": "18px", "color": "rgb(100,116,139)" }, "text": "专业的设计工具平台，帮助团队高效协作，提升设计效率与质量。" },
+        { "nid": 17, "tag": "button", "depth": 4, "rect": { "x": 120, "y": 376, "w": 160, "h": 52  }, "semantic": "button", "label": "主CTA按钮-免费开始","confidence": "high", "style": { "backgroundColor": "rgb(59,130,246)", "borderRadius": "8px", "fontSize": "16px", "fontWeight": "600", "color": "rgb(255,255,255)" }, "text": "免费开始" },
+        { "nid": 18, "tag": "button", "depth": 4, "rect": { "x": 292, "y": 376, "w": 148, "h": 52  }, "semantic": "button", "label": "次CTA按钮-了解更多","confidence": "high", "style": { "borderRadius": "8px", "fontSize": "16px", "border": "1px solid rgb(203,213,225)" }, "text": "了解更多" }
+      ]
+    },
+
+    {
+      "nid": 19,
+      "tag": "section",
+      "depth": 3,
+      "rect": { "x": 0, "y": 544, "w": 1440, "h": 520 },
+      "semantic": "container",
+      "label": "核心功能区",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(255,255,255)" },
+      "children": [
+        { "nid": 20, "tag": "span", "depth": 4, "rect": { "x": 660, "y": 576, "w": 120, "h": 28 }, "semantic": "badge",  "label": "功能分区标签",   "confidence": "high", "style": { "backgroundColor": "rgb(239,246,255)", "borderRadius": "14px", "fontSize": "12px" }, "text": "核心功能" },
+        { "nid": 21, "tag": "h2",   "depth": 4, "rect": { "x": 470, "y": 620, "w": 500, "h": 48 }, "semantic": "heading","label": "功能区主标题",   "confidence": "high", "style": { "fontSize": "32px", "fontWeight": "700", "textAlign": "center" }, "text": "为什么选择我们的平台" },
+        { "nid": 22, "tag": "p",    "depth": 4, "rect": { "x": 380, "y": 684, "w": 680, "h": 40 }, "semantic": "text",   "label": "功能区副标题",   "confidence": "high", "style": { "fontSize": "16px", "color": "rgb(100,116,139)", "textAlign": "center" }, "text": "我们提供全套专业设计协作工具，满足团队从设计到交付的全流程需求" },
+        {
+          "nid": 23, "tag": "div", "depth": 4,
+          "rect": { "x": 120, "y": 752, "w": 360, "h": 272 },
+          "semantic": "card", "label": "功能卡片-智能设计", "confidence": "high",
+          "style": { "backgroundColor": "rgb(248,250,252)", "borderRadius": "12px" },
+          "children": [
+            { "nid": 24, "tag": "span", "depth": 5, "rect": { "x": 152, "y": 784, "w": 48, "h": 48 }, "semantic": "icon",   "label": "智能设计图标 48×48 细线", "confidence": "high", "style": {} },
+            { "nid": 25, "tag": "h3",   "depth": 5, "rect": { "x": 152, "y": 848, "w": 296, "h": 28 }, "semantic": "heading","label": "卡片标题-智能设计辅助","confidence": "high", "style": { "fontSize": "18px", "fontWeight": "600" }, "text": "智能设计辅助" },
+            { "nid": 26, "tag": "p",    "depth": 5, "rect": { "x": 152, "y": 892, "w": 296, "h": 72 }, "semantic": "text",   "label": "卡片描述-智能设计",   "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "AI驱动的设计建议，自动布局优化，让创意落地更快更准。" }
+          ]
+        },
+        {
+          "nid": 27, "tag": "div", "depth": 4,
+          "rect": { "x": 540, "y": 752, "w": 360, "h": 272 },
+          "semantic": "card", "label": "功能卡片-团队协作", "confidence": "high",
+          "style": { "backgroundColor": "rgb(248,250,252)", "borderRadius": "12px" },
+          "children": [
+            { "nid": 28, "tag": "span", "depth": 5, "rect": { "x": 572, "y": 784, "w": 48, "h": 48 }, "semantic": "icon",   "label": "协作图标 48×48 细线", "confidence": "high", "style": {} },
+            { "nid": 29, "tag": "h3",   "depth": 5, "rect": { "x": 572, "y": 848, "w": 296, "h": 28 }, "semantic": "heading","label": "卡片标题-实时团队协作","confidence": "high", "style": { "fontSize": "18px", "fontWeight": "600" }, "text": "实时团队协作" },
+            { "nid": 30, "tag": "p",    "depth": 5, "rect": { "x": 572, "y": 892, "w": 296, "h": 72 }, "semantic": "text",   "label": "卡片描述-团队协作",   "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "多人实时协同编辑，版本历史追踪，评论与标注一体化。" }
+          ]
+        },
+        {
+          "nid": 31, "tag": "div", "depth": 4,
+          "rect": { "x": 960, "y": 752, "w": 360, "h": 272 },
+          "semantic": "card", "label": "功能卡片-数据洞察", "confidence": "high",
+          "style": { "backgroundColor": "rgb(248,250,252)", "borderRadius": "12px" },
+          "children": [
+            { "nid": 32, "tag": "span", "depth": 5, "rect": { "x": 992, "y": 784, "w": 48, "h": 48 }, "semantic": "icon",   "label": "数据图标 48×48 细线", "confidence": "high", "style": {} },
+            { "nid": 33, "tag": "h3",   "depth": 5, "rect": { "x": 992, "y": 848, "w": 296, "h": 28 }, "semantic": "heading","label": "卡片标题-数据分析洞察","confidence": "high", "style": { "fontSize": "18px", "fontWeight": "600" }, "text": "数据分析洞察" },
+            { "nid": 34, "tag": "p",    "depth": 5, "rect": { "x": 992, "y": 892, "w": 296, "h": 72 }, "semantic": "text",   "label": "卡片描述-数据洞察",   "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "用户行为分析，设计效果追踪，数据驱动的设计决策支持。" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 35,
+      "tag": "section",
+      "depth": 3,
+      "rect": { "x": 0, "y": 1064, "w": 1440, "h": 480 },
+      "semantic": "container",
+      "label": "图文内容区",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(248,250,252)" },
+      "children": [
+        { "nid": 36, "tag": "img", "depth": 4, "rect": { "x": 120, "y": 1096, "w": 560, "h": 360 }, "semantic": "image", "label": "产品截图", "confidence": "high", "style": { "borderRadius": "12px" } },
+        { "nid": 37, "tag": "h2",  "depth": 4, "rect": { "x": 760, "y": 1096, "w": 520, "h": 52  }, "semantic": "heading", "label": "内容区标题", "confidence": "high", "style": { "fontSize": "32px", "fontWeight": "700" }, "text": "深度定制你的工作流" },
+        { "nid": 38, "tag": "p",   "depth": 4, "rect": { "x": 760, "y": 1164, "w": 520, "h": 72  }, "semantic": "text",    "label": "内容区描述", "confidence": "high", "style": { "fontSize": "16px", "color": "rgb(100,116,139)" }, "text": "从快捷键到插件系统，从云端同步到企业安全，每一个细节都为专业团队量身打造。" },
+        {
+          "nid": 39, "tag": "div", "depth": 4,
+          "rect": { "x": 760, "y": 1252, "w": 520, "h": 256 },
+          "semantic": "list", "label": "特性列表", "confidence": "high",
+          "style": {},
+          "children": [
+            {
+              "nid": 40, "tag": "div", "depth": 5,
+              "rect": { "x": 760, "y": 1252, "w": 520, "h": 56 },
+              "semantic": "list-item", "label": "特性列表项1", "confidence": "high", "style": {},
+              "children": [
+                { "nid": 41, "tag": "span", "depth": 6, "rect": { "x": 760, "y": 1268, "w": 24, "h": 24 }, "semantic": "icon", "label": "勾选图标 24×24 细线", "confidence": "high", "style": {} },
+                { "nid": 42, "tag": "span", "depth": 6, "rect": { "x": 800, "y": 1268, "w": 440, "h": 24 }, "semantic": "text", "label": "特性描述1", "confidence": "high", "style": { "fontSize": "15px" }, "text": "自定义快捷键和工具栏布局" }
+              ]
+            },
+            { "nid": 43, "tag": "hr", "depth": 5, "rect": { "x": 760, "y": 1308, "w": 520, "h": 1 }, "semantic": "divider", "label": "特性列表分割线1", "confidence": "high", "style": {} },
+            {
+              "nid": 44, "tag": "div", "depth": 5,
+              "rect": { "x": 760, "y": 1309, "w": 520, "h": 56 },
+              "semantic": "list-item", "label": "特性列表项2", "confidence": "high", "style": {},
+              "children": [
+                { "nid": 45, "tag": "span", "depth": 6, "rect": { "x": 760, "y": 1325, "w": 24, "h": 24 }, "semantic": "icon", "label": "勾选图标 24×24 细线", "confidence": "high", "style": {} },
+                { "nid": 46, "tag": "span", "depth": 6, "rect": { "x": 800, "y": 1325, "w": 440, "h": 24 }, "semantic": "text", "label": "特性描述2", "confidence": "high", "style": { "fontSize": "15px" }, "text": "丰富的插件生态系统与开放API" }
+              ]
+            },
+            { "nid": 47, "tag": "hr", "depth": 5, "rect": { "x": 760, "y": 1365, "w": 520, "h": 1 }, "semantic": "divider", "label": "特性列表分割线2", "confidence": "high", "style": {} },
+            {
+              "nid": 48, "tag": "div", "depth": 5,
+              "rect": { "x": 760, "y": 1366, "w": 520, "h": 56 },
+              "semantic": "list-item", "label": "特性列表项3", "confidence": "high", "style": {},
+              "children": [
+                { "nid": 49, "tag": "span", "depth": 6, "rect": { "x": 760, "y": 1382, "w": 24, "h": 24 }, "semantic": "icon", "label": "勾选图标 24×24 细线", "confidence": "high", "style": {} },
+                { "nid": 50, "tag": "span", "depth": 6, "rect": { "x": 800, "y": 1382, "w": 440, "h": 24 }, "semantic": "text", "label": "特性描述3", "confidence": "high", "style": { "fontSize": "15px" }, "text": "多平台无缝云端同步" }
+              ]
+            },
+            { "nid": 51, "tag": "hr", "depth": 5, "rect": { "x": 760, "y": 1422, "w": 520, "h": 1 }, "semantic": "divider", "label": "特性列表分割线3", "confidence": "high", "style": {} },
+            {
+              "nid": 52, "tag": "div", "depth": 5,
+              "rect": { "x": 760, "y": 1423, "w": 520, "h": 56 },
+              "semantic": "list-item", "label": "特性列表项4", "confidence": "high", "style": {},
+              "children": [
+                { "nid": 53, "tag": "span", "depth": 6, "rect": { "x": 760, "y": 1439, "w": 24, "h": 24 }, "semantic": "icon", "label": "勾选图标 24×24 细线", "confidence": "high", "style": {} },
+                { "nid": 54, "tag": "span", "depth": 6, "rect": { "x": 800, "y": 1439, "w": 440, "h": 24 }, "semantic": "text", "label": "特性描述4", "confidence": "high", "style": { "fontSize": "15px" }, "text": "企业级安全与合规认证" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 55,
+      "tag": "section",
+      "depth": 3,
+      "rect": { "x": 0, "y": 1544, "w": 1440, "h": 160 },
+      "semantic": "container",
+      "label": "数据统计横幅",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(59,130,246)" },
+      "children": [
+        {
+          "nid": 56, "tag": "div", "depth": 4,
+          "rect": { "x": 160, "y": 1576, "w": 260, "h": 96 },
+          "semantic": "container", "label": "统计数据1-注册用户", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 57, "tag": "span", "depth": 5, "rect": { "x": 160, "y": 1576, "w": 260, "h": 48 }, "semantic": "heading", "label": "统计数字-500万+", "confidence": "high", "style": { "fontSize": "36px", "fontWeight": "700", "color": "rgb(255,255,255)", "textAlign": "center" }, "text": "500万+" },
+            { "nid": 58, "tag": "span", "depth": 5, "rect": { "x": 160, "y": 1632, "w": 260, "h": 24 }, "semantic": "text",    "label": "统计标签-注册用户",  "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(219,234,254)", "textAlign": "center" }, "text": "注册用户" }
+          ]
+        },
+        {
+          "nid": 59, "tag": "div", "depth": 4,
+          "rect": { "x": 590, "y": 1576, "w": 260, "h": 96 },
+          "semantic": "container", "label": "统计数据2-企业客户", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 60, "tag": "span", "depth": 5, "rect": { "x": 590, "y": 1576, "w": 260, "h": 48 }, "semantic": "heading", "label": "统计数字-10万+",  "confidence": "high", "style": { "fontSize": "36px", "fontWeight": "700", "color": "rgb(255,255,255)", "textAlign": "center" }, "text": "10万+" },
+            { "nid": 61, "tag": "span", "depth": 5, "rect": { "x": 590, "y": 1632, "w": 260, "h": 24 }, "semantic": "text",    "label": "统计标签-企业客户", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(219,234,254)", "textAlign": "center" }, "text": "企业客户" }
+          ]
+        },
+        {
+          "nid": 62, "tag": "div", "depth": 4,
+          "rect": { "x": 1020, "y": 1576, "w": 260, "h": 96 },
+          "semantic": "container", "label": "统计数据3-服务可用率", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 63, "tag": "span", "depth": 5, "rect": { "x": 1020, "y": 1576, "w": 260, "h": 48 }, "semantic": "heading", "label": "统计数字-99.9%",    "confidence": "high", "style": { "fontSize": "36px", "fontWeight": "700", "color": "rgb(255,255,255)", "textAlign": "center" }, "text": "99.9%" },
+            { "nid": 64, "tag": "span", "depth": 5, "rect": { "x": 1020, "y": 1632, "w": 260, "h": 24 }, "semantic": "text",    "label": "统计标签-服务可用率","confidence": "high", "style": { "fontSize": "14px", "color": "rgb(219,234,254)", "textAlign": "center" }, "text": "服务可用率" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 65,
+      "tag": "footer",
+      "depth": 3,
+      "rect": { "x": 0, "y": 1704, "w": 1440, "h": 296 },
+      "semantic": "container",
+      "label": "页脚",
+      "confidence": "high",
+      "style": { "backgroundColor": "rgb(15,23,42)" },
+      "children": [
+        {
+          "nid": 66, "tag": "div", "depth": 4,
+          "rect": { "x": 120, "y": 1736, "w": 280, "h": 180 },
+          "semantic": "container", "label": "品牌信息列", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 67, "tag": "img",  "depth": 5, "rect": { "x": 120, "y": 1736, "w": 120, "h": 32 }, "semantic": "image", "label": "页脚Logo",     "confidence": "high", "style": {} },
+            { "nid": 68, "tag": "p",    "depth": 5, "rect": { "x": 120, "y": 1784, "w": 280, "h": 56 }, "semantic": "text",  "label": "品牌描述文字", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "打造更好的数字体验，专业可靠。" },
+            { "nid": 69, "tag": "span", "depth": 5, "rect": { "x": 120, "y": 1856, "w": 24, "h": 24 }, "semantic": "icon",  "label": "社交图标-微博 24×24 细线",  "confidence": "high", "style": {} },
+            { "nid": 70, "tag": "span", "depth": 5, "rect": { "x": 152, "y": 1856, "w": 24, "h": 24 }, "semantic": "icon",  "label": "社交图标-微信 24×24 细线",  "confidence": "high", "style": {} },
+            { "nid": 71, "tag": "span", "depth": 5, "rect": { "x": 184, "y": 1856, "w": 24, "h": 24 }, "semantic": "icon",  "label": "社交图标-Github 24×24 细线","confidence": "high", "style": {} }
+          ]
+        },
+        {
+          "nid": 72, "tag": "div", "depth": 4,
+          "rect": { "x": 520, "y": 1736, "w": 160, "h": 160 },
+          "semantic": "container", "label": "产品导航列", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 73, "tag": "h4",   "depth": 5, "rect": { "x": 520, "y": 1736, "w": 160, "h": 24 }, "semantic": "heading", "label": "页脚列标题-产品",  "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "600", "color": "rgb(255,255,255)" }, "text": "产品" },
+            { "nid": 74, "tag": "span", "depth": 5, "rect": { "x": 520, "y": 1776, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-功能介绍", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "功能介绍" },
+            { "nid": 75, "tag": "span", "depth": 5, "rect": { "x": 520, "y": 1808, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-定价方案", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "定价方案" },
+            { "nid": 76, "tag": "span", "depth": 5, "rect": { "x": 520, "y": 1840, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-更新日志", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "更新日志" },
+            { "nid": 77, "tag": "span", "depth": 5, "rect": { "x": 520, "y": 1872, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-路线图",   "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "路线图" }
+          ]
+        },
+        {
+          "nid": 78, "tag": "div", "depth": 4,
+          "rect": { "x": 800, "y": 1736, "w": 160, "h": 160 },
+          "semantic": "container", "label": "公司导航列", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 79, "tag": "h4",   "depth": 5, "rect": { "x": 800, "y": 1736, "w": 160, "h": 24 }, "semantic": "heading", "label": "页脚列标题-公司",  "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "600", "color": "rgb(255,255,255)" }, "text": "公司" },
+            { "nid": 80, "tag": "span", "depth": 5, "rect": { "x": 800, "y": 1776, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-关于我们", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "关于我们" },
+            { "nid": 81, "tag": "span", "depth": 5, "rect": { "x": 800, "y": 1808, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-团队成员", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "团队成员" },
+            { "nid": 82, "tag": "span", "depth": 5, "rect": { "x": 800, "y": 1840, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-加入我们", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "加入我们" },
+            { "nid": 83, "tag": "span", "depth": 5, "rect": { "x": 800, "y": 1872, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-新闻中心", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "新闻中心" }
+          ]
+        },
+        {
+          "nid": 84, "tag": "div", "depth": 4,
+          "rect": { "x": 1080, "y": 1736, "w": 160, "h": 160 },
+          "semantic": "container", "label": "支持导航列", "confidence": "high", "style": {},
+          "children": [
+            { "nid": 85, "tag": "h4",   "depth": 5, "rect": { "x": 1080, "y": 1736, "w": 160, "h": 24 }, "semantic": "heading", "label": "页脚列标题-支持",  "confidence": "high", "style": { "fontSize": "14px", "fontWeight": "600", "color": "rgb(255,255,255)" }, "text": "支持" },
+            { "nid": 86, "tag": "span", "depth": 5, "rect": { "x": 1080, "y": 1776, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-帮助中心", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "帮助中心" },
+            { "nid": 87, "tag": "span", "depth": 5, "rect": { "x": 1080, "y": 1808, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-联系我们", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "联系我们" },
+            { "nid": 88, "tag": "span", "depth": 5, "rect": { "x": 1080, "y": 1840, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-状态页面", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "状态页面" },
+            { "nid": 89, "tag": "span", "depth": 5, "rect": { "x": 1080, "y": 1872, "w": 160, "h": 20 }, "semantic": "text",    "label": "页脚链接-隐私政策", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(148,163,184)" }, "text": "隐私政策" }
+          ]
+        },
+        { "nid": 90, "tag": "hr",   "depth": 4, "rect": { "x": 120, "y": 1932, "w": 1200, "h": 1  }, "semantic": "divider", "label": "页脚分割线",   "confidence": "high", "style": {} },
+        { "nid": 91, "tag": "span", "depth": 4, "rect": { "x": 120, "y": 1952, "w": 500,  "h": 20 }, "semantic": "text",    "label": "版权文字",     "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "© 2024 DesignHub. 保留所有权利。" },
+        { "nid": 92, "tag": "span", "depth": 4, "rect": { "x": 960,  "y": 1952, "w": 80,  "h": 20 }, "semantic": "text",    "label": "页脚链接-隐私政策2","confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "隐私政策" },
+        { "nid": 93, "tag": "span", "depth": 4, "rect": { "x": 1064, "y": 1952, "w": 80,  "h": 20 }, "semantic": "text",    "label": "页脚链接-服务条款","confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "服务条款" },
+        { "nid": 94, "tag": "span", "depth": 4, "rect": { "x": 1168, "y": 1952, "w": 100, "h": 20 }, "semantic": "text",    "label": "页脚链接-Cookie", "confidence": "high", "style": { "fontSize": "14px", "color": "rgb(100,116,139)" }, "text": "Cookie 设置" }
+      ]
+    }
+
+  ]
+}

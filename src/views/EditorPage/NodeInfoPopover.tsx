@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch, computed, Transition } from 'vue'
+import { defineComponent, ref, watch, computed, Transition, nextTick } from 'vue'
 import type { PropType } from 'vue'
 import { ElSelect, ElOption, ElInput } from 'element-plus'
 import type { DslNode, LayerType } from '@/types/dsl'
@@ -20,6 +20,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useDslStore()
 
+    const popoverRef       = ref<HTMLElement | null>(null)
     const layerName        = ref('')
     const layerDescription = ref('')
 
@@ -38,21 +39,29 @@ export default defineComponent({
       store.updateNodeMeta(props.node.nid, props.node.layerType, layerName.value, layerDescription.value)
     }
 
-    const H = 220 // estimated popover height
+    const above = ref(false)
+
+    watch(() => props.position, async (pos) => {
+      if (!pos) return
+      above.value = false
+      await nextTick()
+      const h = popoverRef.value?.offsetHeight ?? 220
+      above.value = pos.y + 12 + h > window.innerHeight - 8
+    })
 
     const popoverStyle = computed(() => {
       if (!props.position) return {}
       const vw = window.innerWidth
-      const vh = window.innerHeight
+      const h  = popoverRef.value?.offsetHeight ?? 220
       // Horizontal: prefer right of click, flip left if overflow
       let x = props.position.x + 12
       if (x + W > vw - 8) x = props.position.x - W - 12
       x = Math.max(8, x)
-      // Vertical: prefer below click, flip above if overflow
-      let y = props.position.y + 12
-      if (y + H > vh - 8) y = props.position.y - H - 12
-      y = Math.max(8, y)
-      return { left: `${x}px`, top: `${y}px`, width: `${W}px` }
+      // Vertical: below or above based on available space
+      const y = above.value
+        ? props.position.y - h - 12
+        : props.position.y + 12
+      return { left: `${x}px`, top: `${Math.max(8, y)}px`, width: `${W}px` }
     })
 
     return () => (
@@ -64,11 +73,12 @@ export default defineComponent({
       >
         {props.node && props.position && (
           <div
+            ref={popoverRef}
             class="fixed z-50 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden"
             style={popoverStyle.value}
             onClick={(e: MouseEvent) => e.stopPropagation()}
           >
-            <div class="flex items-center justify-between px-3 py-2.5 border-b border-gray-100">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
               <span class="text-xs font-semibold text-gray-500">节点信息</span>
               <button
                 class="text-gray-300 hover:text-gray-500 transition-colors"
@@ -80,8 +90,8 @@ export default defineComponent({
               </button>
             </div>
 
-            <div class="px-3 py-3 flex flex-col gap-2.5">
-              <div class="flex flex-col gap-1">
+            <div class="px-4 py-4 flex flex-col gap-4">
+              <div class="flex flex-col gap-1.5">
                 <label class="text-xs text-gray-400">layerType</label>
                 <ElSelect
                   modelValue={props.node.layerType}
@@ -95,7 +105,7 @@ export default defineComponent({
                 </ElSelect>
               </div>
 
-              <div class="flex flex-col gap-1">
+              <div class="flex flex-col gap-1.5">
                 <label class="text-xs text-gray-400">layerName</label>
                 <ElInput
                   modelValue={layerName.value}
@@ -104,7 +114,7 @@ export default defineComponent({
                 />
               </div>
 
-              <div class="flex flex-col gap-1">
+              <div class="flex flex-col gap-1.5">
                 <label class="text-xs text-gray-400">layerDescription</label>
                 <ElInput
                   modelValue={layerDescription.value}

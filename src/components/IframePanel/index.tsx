@@ -43,9 +43,21 @@ export default defineComponent({
             d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
         </svg>
         <div class="text-center">
-          <p class="text-sm font-medium">输入地址预览，或调用 uploadZip() 加载本地包</p>
+          <p class="text-sm font-medium">调用 uploadZip() 加载本地压缩包</p>
           <p class="text-xs mt-1 opacity-60">window.uploadZip() · window.uploadDsl() · window.downloadDsl()</p>
         </div>
+      </div>
+    )
+
+    const ErrorState = ({ msg }: { msg: string }) => (
+      <div class="flex-1 flex flex-col items-center justify-center gap-3 select-none">
+        <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <p class="text-sm text-red-500 font-medium">{msg}</p>
       </div>
     )
 
@@ -88,7 +100,9 @@ export default defineComponent({
               <div class="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
             </div>
           )}
-          {!iframeSrc.value
+          {previewStore.error
+            ? <ErrorState msg={previewStore.error} />
+            : !iframeSrc.value
             ? <EmptyState />
             : (
               <iframe

@@ -22,7 +22,9 @@
       "Read(//Users/ucd/Desktop/**)",
       "Bash(node -e ' *)",
       "Bash(pkill -f \"vite --port 5199\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(unzip -l /Users/ucd/Desktop/hex-render-view/hex-test.zip)",
+      "Bash(unzip -p /Users/ucd/Desktop/hex-render-view/hex-test.zip output.txt)"
     ]
   }
 }

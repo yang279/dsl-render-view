@@ -83,8 +83,9 @@ export default defineComponent({
       }
     })
 
-    watch(() => previewStore.hexData, (hex) => {
+    watch(() => previewStore.hexData, (hex, oldHex) => {
       if (!hex) return
+      if (hex === oldHex) return
       const iframe = iframeRef.value
       if (!iframe || !iframeReady.value) return
       const ficAppObj = (iframe.contentWindow as any)?._FicAppObj

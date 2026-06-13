@@ -120,6 +120,10 @@ export function useWindowBridge() {
           previewStore.setHexData(hexStr)
           previewStore.setSvgMap(svgMap)
           console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(svgMap).join(',')}`)
+
+          setTimeout(() => {
+            if (typeof window.runPlugin === 'function') window.runPlugin()
+          }, 300)
         } catch (err) {
           previewStore.setError(`解压失败: ${(err as Error).message}`)
           console.error('[ZIP] Extract failed:', err)

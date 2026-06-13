@@ -28,7 +28,7 @@ export const usePreviewStore = defineStore('preview', () => {
     if (_cleanup) _cleanup()
     src.value        = ''
     error.value      = ''
-    txtContent.value = ''
+    txtContent.value = null
     _cleanup         = null
   }
 

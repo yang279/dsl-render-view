@@ -110,11 +110,7 @@ export default defineComponent({
           ))}
         </div>
 
-        {/* Debug badge — remove in production */}
-        <div class="sticky bottom-2 left-2 inline-flex items-center gap-1 text-xs bg-black/40 text-white px-2 py-0.5 rounded-full pointer-events-none">
-          <span>{visibleNodes.value.length}</span>
-          <span class="opacity-60">/ {allNodes.value.filter(n => n.rect.w > 0 && !n.passthrough).length} 节点</span>
-        </div>
+
       </div>
     )
   },

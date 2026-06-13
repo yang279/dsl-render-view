@@ -4,6 +4,6 @@ declare global {
   interface Window {
     uploadDsl: () => void
     downloadDsl: () => void
-    uploadZip: () => Promise<void>
+    uploadZip: () => void
   }
 }

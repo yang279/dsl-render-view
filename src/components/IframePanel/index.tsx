@@ -1,6 +1,12 @@
 import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue'
 import { usePreviewStore } from '@/stores/preview'
 
+interface ConsoleEntry {
+  level: 'log' | 'warn' | 'error' | 'info'
+  text: string
+  time: number
+}
+
 function buildPluginCode(hex: string, svgMap: Record<string, string>): string {
   const svgMapJson = JSON.stringify(svgMap)
 
@@ -67,6 +73,8 @@ export default defineComponent({
     const loading     = ref(false)
     const iframeRef   = ref<HTMLIFrameElement | null>(null)
     const iframeReady = ref(false)
+    const consoleExpanded = ref(true)
+    const consoleEntries  = ref<ConsoleEntry[]>([])
 
     watch(() => previewStore.src, (src) => {
       if (src) {
@@ -80,53 +88,108 @@ export default defineComponent({
       let url = inputUrl.value.trim()
       if (!url) return
       if (!/^https?:\/\//i.test(url)) url = `https://${url}`
-      inputUrl.value  = url
-      loading.value   = true
+      inputUrl.value    = url
+      loading.value     = true
       iframeReady.value = false
-      iframeSrc.value = url
+      consoleEntries.value = []
+      iframeSrc.value   = url
     }
 
     function refresh() {
       if (!iframeSrc.value) return
-      loading.value   = true
+      loading.value     = true
       iframeReady.value = false
+      consoleEntries.value = []
       const cur = iframeSrc.value
       iframeSrc.value = ''
       setTimeout(() => { iframeSrc.value = cur }, 50)
     }
 
+    function addConsoleEntry(level: ConsoleEntry['level'], text: string) {
+      consoleEntries.value.push({ level, text, time: Date.now() })
+      if (consoleEntries.value.length > 200) {
+        consoleEntries.value.splice(0, consoleEntries.value.length - 200)
+      }
+    }
+
+    function injectConsoleInterceptor() {
+      const iframe = iframeRef.value
+      if (!iframe) return
+
+      try {
+        const win = iframe.contentWindow as any
+        if (!win) return
+
+        const script = win.document.createElement('script')
+        script.textContent = `
+(function() {
+  const origLog   = console.log;
+  const origWarn  = console.warn;
+  const origError = console.error;
+  const origInfo  = console.info;
+
+  const relay = (level, args) => {
+    try {
+      const text = Array.prototype.map.call(args, a => {
+        if (a instanceof Error) return a.stack || a.message;
+        if (typeof a === 'object') try { return JSON.stringify(a) } catch(e) { return String(a) }
+        return String(a);
+      }).join(' ');
+      parent.postMessage({ source: 'iframe-console', level: level, text: text }, '*');
+    } catch(e) {}
+  };
+
+  console.log   = function() { relay('log',   arguments); origLog.apply(console,   arguments); };
+  console.warn  = function() { relay('warn',  arguments); origWarn.apply(console,  arguments); };
+  console.error = function() { relay('error', arguments); origError.apply(console, arguments); };
+  console.info  = function() { relay('info',  arguments); origInfo.apply(console,  arguments); };
+})();
+`
+        win.document.head.appendChild(script)
+        script.remove()
+      } catch (err) {
+        console.warn('[Console] Cannot inject interceptor (cross-origin?):', err)
+      }
+    }
+
+    function handleMessage(event: MessageEvent) {
+      if (event.data?.source !== 'iframe-console') return
+      const { level, text } = event.data
+      if (level && text) addConsoleEntry(level, text)
+    }
+
     async function runPlugin() {
       const iframe = iframeRef.value
       if (!iframe) {
-        console.warn('[Plugin] No iframe found')
+        addConsoleEntry('warn', '[Plugin] No iframe found')
         return
       }
       if (!iframeReady.value) {
-        console.warn('[Plugin] iframe not loaded yet')
+        addConsoleEntry('warn', '[Plugin] iframe not loaded yet')
         return
       }
 
       const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
       if (!ficAppObj) {
-        console.warn('[Plugin] _FicAppObj not found on iframe window')
+        addConsoleEntry('warn', '[Plugin] _FicAppObj not found on iframe window')
         return
       }
 
       const hex  = previewStore.hexData
       const svgs = previewStore.svgMap
       if (!hex && !Object.keys(svgs).length) {
-        console.warn('[Plugin] No hex/svg data available, upload a ZIP first')
+        addConsoleEntry('warn', '[Plugin] No hex/svg data available, upload a ZIP first')
         return
       }
 
       const code = buildPluginCode(hex, svgs)
-      console.log('[Plugin] Executing plugin code, hex length:', hex.length, 'svgs:', Object.keys(svgs).join(','))
+      addConsoleEntry('info', `[Plugin] Executing plugin, hex: ${hex.length} chars, svgs: ${Object.keys(svgs).join(',')}`)
 
       try {
         await ficAppObj.runTestPlugin({ editorType: ['dev', 'pixso'] }, code)
-        console.log('[Plugin] Execution completed')
+        addConsoleEntry('info', '[Plugin] Execution completed')
       } catch (err) {
-        console.error('[Plugin] Execution failed:', err)
+        addConsoleEntry('error', `[Plugin] Execution failed: ${(err as Error).message}`)
       }
     }
 
@@ -138,12 +201,21 @@ export default defineComponent({
       delete (window as any).runPlugin
     }
 
-    onMounted(exposeRunPlugin)
-    onUnmounted(cleanupRunPlugin)
+    onMounted(() => {
+      exposeRunPlugin()
+      window.addEventListener('message', handleMessage)
+    })
+
+    onUnmounted(() => {
+      cleanupRunPlugin()
+      window.removeEventListener('message', handleMessage)
+    })
 
     function onIframeLoad() {
-      loading.value   = false
+      loading.value     = false
       iframeReady.value = true
+
+      injectConsoleInterceptor()
 
       if (!previewStore.hexData && !Object.keys(previewStore.svgMap).length) return
 
@@ -152,11 +224,11 @@ export default defineComponent({
 
       const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
       if (!ficAppObj) {
-        console.warn('[Plugin] iframe loaded but _FicAppObj not yet available')
+        addConsoleEntry('warn', '[Plugin] iframe loaded but _FicAppObj not yet available')
         return
       }
 
-      console.log('[Plugin] _FicAppObj detected, auto-running plugin')
+      addConsoleEntry('info', '[Plugin] _FicAppObj detected, auto-running plugin')
       runPlugin()
     }
 
@@ -184,6 +256,20 @@ export default defineComponent({
         <p class="text-sm text-red-500 font-medium">{msg}</p>
       </div>
     )
+
+    const LEVEL_STYLE: Record<string, string> = {
+      log:   'text-gray-600',
+      info:  'text-blue-600',
+      warn:  'text-yellow-600',
+      error: 'text-red-600',
+    }
+
+    const LEVEL_LABEL: Record<string, string> = {
+      log:   'LOG',
+      info:  'INFO',
+      warn:  'WARN',
+      error: 'ERR',
+    }
 
     return () => (
       <div class="flex flex-col h-full bg-white">
@@ -253,6 +339,32 @@ export default defineComponent({
             )
           }
         </div>
+
+        {consoleEntries.value.length > 0 && (
+          <div class="flex-shrink-0 border-t border-gray-200 bg-gray-50">
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-500 hover:text-gray-700 w-full"
+              onClick={() => { consoleExpanded.value = !consoleExpanded.value }}
+            >
+              <svg class={['w-3 h-3 transition-transform', consoleExpanded.value ? 'rotate-90' : '']}
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              <span>Console ({consoleEntries.value.length})</span>
+            </button>
+
+            {consoleExpanded.value && (
+              <div class="max-h-40 overflow-y-auto px-3 pb-2 font-mono text-xs leading-relaxed">
+                {consoleEntries.value.map((entry, i) => (
+                  <div key={i} class={['flex gap-2', LEVEL_STYLE[entry.level]]}>
+                    <span class="w-8 opacity-60 flex-shrink-0">{LEVEL_LABEL[entry.level]}</span>
+                    <span class="break-all">{entry.text}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     )
   },

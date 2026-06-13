@@ -84,6 +84,19 @@ export default defineComponent({
       }
     })
 
+    watch(() => previewStore.hexData, (hex) => {
+      if (!hex) return
+      const iframe = iframeRef.value
+      if (!iframe || !iframeReady.value) return
+      const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
+      if (!ficAppObj) {
+        addConsoleEntry('warn', '[Plugin] ZIP loaded but _FicAppObj not found yet')
+        return
+      }
+      addConsoleEntry('info', '[Plugin] ZIP loaded, iframe ready, auto-running plugin')
+      runPlugin()
+    })
+
     function navigate() {
       let url = inputUrl.value.trim()
       if (!url) return

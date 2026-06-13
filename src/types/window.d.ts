@@ -5,5 +5,6 @@ declare global {
     uploadDsl: () => void
     downloadDsl: () => void
     uploadZip: () => void
+    runPlugin: () => Promise<void>
   }
 }

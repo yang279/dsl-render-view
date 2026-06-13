@@ -1,16 +1,64 @@
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue'
 import { usePreviewStore } from '@/stores/preview'
+
+function buildPluginCode(hex: string, svgMap: Record<string, string>): string {
+  const svgMapJson = JSON.stringify(svgMap)
+
+  return `
+const main = async () => {
+  try {
+    const hex = ${JSON.stringify(hex)};
+    const svgMap = ${svgMapJson};
+
+    const children = pixso.currentPage.children;
+    const lastlayer = children[children.length - 1];
+    const page = await pixso.getNodeById(lastlayer.id);
+
+    const getPluginData = (node) => {
+      return node.getPluginData;
+    };
+
+    const setPlaceholderSvg = async (node) => {
+      try {
+        const { note } = getPluginData(node);
+        if (note && svgMap[note]) {
+          pixso.createSvg(node.id, svgMap[note]);
+        }
+      } catch (error) {
+        console.log(error, 'setPlaceholderSvg error');
+      }
+    };
+
+    const dascandants = await page.findAllAsync();
+    const _loop = async (list) => {
+      for (let i = 0; i < list.length; i++) {
+        const node = list[i];
+        await setPlaceholderSvg(node);
+        if (node.children && node.children.length) {
+          await _loop(node.children);
+        }
+      }
+    };
+    await _loop(dascandants);
+  } catch (error) {
+    console.log(error);
+  }
+};
+main();
+`
+}
 
 export default defineComponent({
   name: 'IframePanel',
   setup() {
     const previewStore = usePreviewStore()
 
-    const inputUrl  = ref('')
-    const iframeSrc = ref('')
-    const loading   = ref(false)
+    const inputUrl    = ref('')
+    const iframeSrc   = ref('')
+    const loading     = ref(false)
+    const iframeRef   = ref<HTMLIFrameElement | null>(null)
+    const iframeReady = ref(false)
 
-    // When uploadZip() resolves a blob URL, load it automatically
     watch(() => previewStore.src, (src) => {
       if (src) {
         iframeSrc.value = src
@@ -25,15 +73,82 @@ export default defineComponent({
       if (!/^https?:\/\//i.test(url)) url = `https://${url}`
       inputUrl.value  = url
       loading.value   = true
+      iframeReady.value = false
       iframeSrc.value = url
     }
 
     function refresh() {
       if (!iframeSrc.value) return
-      loading.value = true
+      loading.value   = true
+      iframeReady.value = false
       const cur = iframeSrc.value
       iframeSrc.value = ''
       setTimeout(() => { iframeSrc.value = cur }, 50)
+    }
+
+    async function runPlugin() {
+      const iframe = iframeRef.value
+      if (!iframe) {
+        console.warn('[Plugin] No iframe found')
+        return
+      }
+      if (!iframeReady.value) {
+        console.warn('[Plugin] iframe not loaded yet')
+        return
+      }
+
+      const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
+      if (!ficAppObj) {
+        console.warn('[Plugin] _FicAppObj not found on iframe window')
+        return
+      }
+
+      const hex  = previewStore.hexData
+      const svgs = previewStore.svgMap
+      if (!hex && !Object.keys(svgs).length) {
+        console.warn('[Plugin] No hex/svg data available, upload a ZIP first')
+        return
+      }
+
+      const code = buildPluginCode(hex, svgs)
+      console.log('[Plugin] Executing plugin code, hex length:', hex.length, 'svgs:', Object.keys(svgs).join(','))
+
+      try {
+        await ficAppObj.runTestPlugin({ editorType: ['dev', 'pixso'] }, code)
+        console.log('[Plugin] Execution completed')
+      } catch (err) {
+        console.error('[Plugin] Execution failed:', err)
+      }
+    }
+
+    function exposeRunPlugin() {
+      window.runPlugin = runPlugin
+    }
+
+    function cleanupRunPlugin() {
+      delete (window as any).runPlugin
+    }
+
+    onMounted(exposeRunPlugin)
+    onUnmounted(cleanupRunPlugin)
+
+    function onIframeLoad() {
+      loading.value   = false
+      iframeReady.value = true
+
+      if (!previewStore.hexData && !Object.keys(previewStore.svgMap).length) return
+
+      const iframe = iframeRef.value
+      if (!iframe) return
+
+      const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
+      if (!ficAppObj) {
+        console.warn('[Plugin] iframe loaded but _FicAppObj not yet available')
+        return
+      }
+
+      console.log('[Plugin] _FicAppObj detected, auto-running plugin')
+      runPlugin()
     }
 
     const EmptyState = () => (
@@ -76,6 +191,19 @@ export default defineComponent({
             </svg>
           </button>
 
+          <button
+            class={['p-1.5 rounded transition-colors flex-shrink-0',
+              previewStore.hexData ? 'text-green-500 hover:bg-green-50' : 'text-gray-300 hover:bg-gray-100 cursor-not-allowed']}
+            onClick={runPlugin}
+            title="执行插件脚本"
+            disabled={!previewStore.hexData}
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </button>
+
           <div class="flex-1 flex items-center bg-gray-50 border border-gray-200 rounded-lg px-3 h-8 gap-2 focus-within:border-blue-300 focus-within:ring-1 focus-within:ring-blue-200 transition-all">
             <input
               class="flex-1 bg-transparent text-sm text-gray-700 outline-none placeholder-gray-400 min-w-0 font-mono"
@@ -106,10 +234,11 @@ export default defineComponent({
             ? <EmptyState />
             : (
               <iframe
+                ref={iframeRef}
                 key={iframeSrc.value}
                 src={iframeSrc.value}
                 class="flex-1 w-full border-0"
-                onLoad={() => { loading.value = false }}
+                onLoad={onIframeLoad}
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               />
             )

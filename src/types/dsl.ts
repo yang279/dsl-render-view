@@ -1,3 +1,10 @@
+export interface ZipResource {
+  filename: string
+  blobUrl: string
+  mimeType: string
+  content?: ArrayBuffer | string
+}
+
 export interface Rect {
   x: number
   y: number

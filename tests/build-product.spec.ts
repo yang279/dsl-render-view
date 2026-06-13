@@ -81,7 +81,8 @@ test.describe('dsl-render-view build product', () => {
   })
 
   test('preview page has URL input and navigate button', async ({ page }) => {
-    await page.goto('/preview')
+    await page.goto('/#/preview')
+    await page.waitForURL(/#\/preview/)
     const input = page.locator('input[placeholder="输入 URL..."]')
     await expect(input).toBeVisible()
     const btn = page.locator('button:has-text("跳转")')

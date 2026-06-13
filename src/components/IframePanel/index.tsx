@@ -20,9 +20,12 @@ const main = async () => {
 
     const setPlaceholderSvg = async (node) => {
       try {
-        const { note } = getPluginData(node);
+        const { note, instanceGuid, textNodeGuid } = getPluginData(node);
         if (note && svgMap[note]) {
           pixso.createSvg(node.id, svgMap[note]);
+          const result = await pixso.aiEditor.call("apply", {
+            operations: \`frame = U("\${instanceGuid}", { "descendants": {"\${textNodeGuid}"} })\`
+          });
         }
       } catch (error) {
         console.log(error, 'setPlaceholderSvg error');

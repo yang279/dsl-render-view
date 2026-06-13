@@ -115,8 +115,8 @@ test.describe('uploadZip with test-output-new.zip', () => {
   })
 
   test('window.runPlugin exists on preview page', async ({ page }) => {
-    await page.goto('/preview')
-    await page.waitForURL(/\/preview/)
+    await page.goto('/#/preview')
+    await page.waitForURL(/#\/preview/)
     const exists = await page.evaluate(() => typeof window.runPlugin === 'function')
     expect(exists).toBe(true)
   })

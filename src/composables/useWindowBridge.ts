@@ -44,85 +44,90 @@ export function useWindowBridge() {
   }
 
   // ── Preview: upload ZIP ───────────────────────────────────────────
+  let zipInput: HTMLInputElement | null = null
+
   async function uploadZip() {
-    const input  = document.createElement('input')
-    input.type   = 'file'
-    input.accept = '.zip,application/zip'
+    if (zipInput) {
+      zipInput.value = ''
+    } else {
+      zipInput = document.createElement('input')
+      zipInput.type   = 'file'
+      zipInput.accept = '.zip,application/zip'
+      zipInput.onchange = async (e: Event) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
 
-    input.onchange = async (e: Event) => {
-      const file = (e.target as HTMLInputElement).files?.[0]
-      if (!file) return
+        try {
+          const JSZip = (await import('jszip')).default
+          const zip   = await JSZip.loadAsync(file)
 
-      try {
-        const JSZip = (await import('jszip')).default
-        const zip   = await JSZip.loadAsync(file)
+          const entries = Object.keys(zip.files).filter(
+            p => !zip.files[p].dir && !p.startsWith('__MACOSX')
+          )
 
-        const entries = Object.keys(zip.files).filter(
-          p => !zip.files[p].dir && !p.startsWith('__MACOSX')
-        )
-
-        if (entries.length === 0) {
-          previewStore.setError('ZIP 中未找到任何文件')
-          return
-        }
-
-        const resList: ZipResource[] = []
-        let txtBuf: ArrayBuffer | null = null
-        const svgMap: Record<string, string> = {}
-        let hexStr = ''
-
-        const MIME: Record<string, string> = {
-          '.svg':  'image/svg+xml',
-          '.png':  'image/png',
-          '.jpg':  'image/jpeg',
-          '.jpeg': 'image/jpeg',
-          '.gif':  'image/gif',
-          '.webp': 'image/webp',
-          '.css':  'text/css',
-          '.js':   'text/javascript',
-          '.html': 'text/html',
-          '.json': 'application/json',
-        }
-
-        for (const key of entries) {
-          const ext  = key.slice(key.lastIndexOf('.')).toLowerCase()
-          const mime = MIME[ext] || 'application/octet-stream'
-
-          if (ext === '.txt') {
-            const rawTxt = await zip.files[key].async('string')
-            hexStr = rawTxt.replace(/^<!--.*?-->\n?/, '')
-            txtBuf = await zip.files[key].async('arraybuffer')
-            const blob = new Blob([txtBuf], { type: 'text/plain' })
-            const url  = URL.createObjectURL(blob)
-            resList.push({ filename: key, blobUrl: url, mimeType: mime, content: txtBuf })
-          } else if (ext === '.svg') {
-            const svgText = await zip.files[key].async('string')
-            const bareName = key.replace(/^.*?([^/]+)\.svg$/, '$1')
-            svgMap[bareName] = svgText
-            const buf  = await zip.files[key].async('arraybuffer')
-            const blob = new Blob([buf], { type: mime })
-            const url  = URL.createObjectURL(blob)
-            resList.push({ filename: key, blobUrl: url, mimeType: mime })
-          } else {
-            const buf  = await zip.files[key].async('arraybuffer')
-            const blob = new Blob([buf], { type: mime })
-            const url  = URL.createObjectURL(blob)
-            resList.push({ filename: key, blobUrl: url, mimeType: mime })
+          if (entries.length === 0) {
+            previewStore.setError('ZIP 中未找到任何文件')
+            return
           }
-        }
 
-        previewStore.setResources(resList)
-        if (txtBuf) previewStore.setTxt(txtBuf)
-        previewStore.setHexData(hexStr)
-        previewStore.setSvgMap(svgMap)
-        console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(svgMap).join(',')}`)
-      } catch (err) {
-        previewStore.setError(`解压失败: ${(err as Error).message}`)
-        console.error('[ZIP] Extract failed:', err)
+          const resList: ZipResource[] = []
+          let txtBuf: ArrayBuffer | null = null
+          const svgMap: Record<string, string> = {}
+          let hexStr = ''
+
+          const MIME: Record<string, string> = {
+            '.svg':  'image/svg+xml',
+            '.png':  'image/png',
+            '.jpg':  'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.gif':  'image/gif',
+            '.webp': 'image/webp',
+            '.css':  'text/css',
+            '.js':   'text/javascript',
+            '.html': 'text/html',
+            '.json': 'application/json',
+          }
+
+          for (const key of entries) {
+            const ext  = key.slice(key.lastIndexOf('.')).toLowerCase()
+            const mime = MIME[ext] || 'application/octet-stream'
+
+            if (ext === '.txt') {
+              const rawTxt = await zip.files[key].async('string')
+              hexStr = rawTxt.replace(/^<!--.*?-->\n?/, '')
+              txtBuf = await zip.files[key].async('arraybuffer')
+              const blob = new Blob([txtBuf], { type: 'text/plain' })
+              const url  = URL.createObjectURL(blob)
+              resList.push({ filename: key, blobUrl: url, mimeType: mime, content: txtBuf })
+            } else if (ext === '.svg') {
+              const svgText = await zip.files[key].async('string')
+              const bareName = key.replace(/^.*?([^/]+)\.svg$/, '$1')
+              svgMap[bareName] = svgText
+              const buf  = await zip.files[key].async('arraybuffer')
+              const blob = new Blob([buf], { type: mime })
+              const url  = URL.createObjectURL(blob)
+              resList.push({ filename: key, blobUrl: url, mimeType: mime })
+            } else {
+              const buf  = await zip.files[key].async('arraybuffer')
+              const blob = new Blob([buf], { type: mime })
+              const url  = URL.createObjectURL(blob)
+              resList.push({ filename: key, blobUrl: url, mimeType: mime })
+            }
+          }
+
+          previewStore.setResources(resList)
+          if (txtBuf) previewStore.setTxt(txtBuf)
+          previewStore.setHexData(hexStr)
+          previewStore.setSvgMap(svgMap)
+          console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(svgMap).join(',')}`)
+        } catch (err) {
+          previewStore.setError(`解压失败: ${(err as Error).message}`)
+          console.error('[ZIP] Extract failed:', err)
+        }
       }
     }
 
-    input.click()
+    zipInput.click()
   }
 
   onMounted(() => {

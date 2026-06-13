@@ -11,7 +11,7 @@ function buildPluginCode(hex: string, svgMap: Record<string, string>): string {
   const svgMapJson = JSON.stringify(svgMap)
 
   return `
-const main = async () => {
+(async () => {
   try {
     const hex = ${JSON.stringify(hex)};
     const svgMap = ${svgMapJson};
@@ -58,8 +58,7 @@ const main = async () => {
   } catch (error) {
     console.log(error);
   }
-};
-main();
+})();
 `
 }
 
@@ -69,7 +68,7 @@ export default defineComponent({
     const previewStore = usePreviewStore()
 
     const inputUrl    = ref('')
-    const iframeSrc   = ref('')
+    const iframeSrc   = ref('https://pixso.cn/app/editor')
     const loading     = ref(false)
     const iframeRef   = ref<HTMLIFrameElement | null>(null)
     const iframeReady = ref(false)
@@ -321,6 +320,13 @@ export default defineComponent({
               onKeydown={(e: KeyboardEvent) => { if (e.key === 'Enter') navigate() }}
             />
           </div>
+
+          <button
+            class="px-3 h-8 rounded-lg bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-xs font-medium transition-colors flex-shrink-0"
+            onClick={() => window.uploadZip()}
+          >
+            上传ZIP
+          </button>
 
           <button
             class="px-3 h-8 rounded-lg bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white text-xs font-medium transition-colors flex-shrink-0"

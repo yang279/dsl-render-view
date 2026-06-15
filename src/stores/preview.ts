@@ -9,6 +9,7 @@ export const usePreviewStore = defineStore('preview', () => {
   const resources  = ref<ZipResource[]>([])
   const hexData    = ref('')
   const svgMap     = ref<Record<string, string>>({})
+  const version    = ref(0)
   let _cleanup: (() => void) | null = null
 
   function load(url: string, cleanup?: () => void) {
@@ -36,6 +37,7 @@ export const usePreviewStore = defineStore('preview', () => {
 
   function setHexData(hex: string) {
     hexData.value = hex
+    version.value++
   }
 
   function setSvgMap(map: Record<string, string>) {
@@ -55,7 +57,7 @@ export const usePreviewStore = defineStore('preview', () => {
   }
 
   return {
-    src, error, txtContent, resources, hexData, svgMap,
+    src, error, txtContent, resources, hexData, svgMap, version,
     load, setError, setTxt, setResources, setHexData, setSvgMap, clear,
   }
 })

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(claude plugin *)",
+      "Bash(ls ~/.claude/ 2>&1)",
+      "Read(//Users/hwl/.claude/**)",
+      "Bash(find ~/.claude -name \"*.md\" 2>/dev/null | head -20; find /usr/local/lib -path \"*/claude*\" -name \"*.json\" 2>/dev/null | head -5)",
+      "Read(//usr/local/lib/**)",
+      "Bash(/usr/local/lib/node_modules/claude/bin/claude.js plugin *)",
+      "Bash(/usr/local/lib/node_modules/claude/bin/claude.js --help)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['bin','version','main'] if k in d}, indent=2\\)\\)\")",
+      "Bash(mkdir -p ~/.claude/plugins/code-simplifier/.claude-plugin)",
+      "Bash(mkdir -p ~/.claude/plugins/code-simplifier/agents)",
+      "Bash(npx vue-tsc *)"
+    ]
+  }
+}

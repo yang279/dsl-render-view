@@ -83,18 +83,21 @@ export default defineComponent({
       }
     })
 
-    watch(() => previewStore.hexData, (hex, oldHex) => {
-      if (!hex) return
-      if (hex === oldHex) return
-      const iframe = iframeRef.value
-      if (!iframe || !iframeReady.value) return
-      const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
-      if (!ficAppObj) {
-        addConsoleEntry('warn', '[Plugin] ZIP loaded but _FicAppObj not found yet')
-        return
+    watch(() => previewStore.version, () => {
+      if (!previewStore.hexData) return
+      try {
+        const iframe = iframeRef.value
+        if (!iframe || !iframeReady.value) return
+        const ficAppObj = (iframe.contentWindow as any)?._FicAppObj
+        if (!ficAppObj) {
+          addConsoleEntry('warn', '[Plugin] ZIP loaded but _FicAppObj not found yet')
+          return
+        }
+        addConsoleEntry('info', '[Plugin] ZIP loaded, iframe ready, auto-running plugin')
+        runPlugin()
+      } catch (err) {
+        addConsoleEntry('warn', `[Plugin] Access iframe failed: ${(err as Error).message}`)
       }
-      addConsoleEntry('info', '[Plugin] ZIP loaded, iframe ready, auto-running plugin')
-      runPlugin()
     })
 
     function navigate() {

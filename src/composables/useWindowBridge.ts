@@ -3,7 +3,7 @@ import { useDslStore } from '@/stores/dsl'
 import { usePreviewStore } from '@/stores/preview'
 import type { ZipResource } from '@/types/dsl'
 
-const PIPELINE_URL = 'http://localhost:3204/pipeline'
+const DSL_TO_HEX_URL = 'http://localhost:3204/dsl-to-hex/convert'
 
 const MIME: Record<string, string> = {
   '.svg':  'image/svg+xml',
@@ -145,28 +145,33 @@ export function useWindowBridge() {
       const file = (e.target as HTMLInputElement).files?.[0]
       if (!file) return
 
-      // POST to pipeline
+      // POST design-dsl JSON to dsl-to-hex/convert
       try {
-        const form = new FormData()
-        form.append('file', file)
+        const text = await file.text()
+        const json = JSON.parse(text)
 
-        console.log(`[Pipeline] Submitting ${file.name} to ${PIPELINE_URL}`)
-        const res = await fetch(PIPELINE_URL, { method: 'POST', body: form })
+        console.log(`[DslToHex] Submitting ${file.name} to ${DSL_TO_HEX_URL}`)
+        const res = await fetch(DSL_TO_HEX_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(json),
+        })
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({ error: res.statusText }))
-          previewStore.setError(`Pipeline 请求失败: ${body.error || res.statusText}`)
+          previewStore.setError(`dsl-to-hex 请求失败: ${body.error || res.statusText}`)
           return
         }
 
         const result = await res.json()
-        if (!result.success) {
-          previewStore.setError(`Pipeline 出错 (step: ${result.step}): ${result.error}`)
-          console.error('[Pipeline] Error:', result)
+        if (!result.zip) {
+          previewStore.setError(`dsl-to-hex 未返回 zip: ${result.error ?? '未知错误'}`)
           return
         }
 
-        console.log(`[Pipeline] Success, artifact_id=${result.artifact_id}`, result.stats)
+        if (result.missing_keys?.length) {
+          console.warn('[DslToHex] missing_keys:', result.missing_keys)
+        }
 
         // decode base64 ZIP
         const binaryStr = atob(result.zip)
@@ -175,8 +180,8 @@ export function useWindowBridge() {
 
         await processZipBuffer(bytes.buffer)
       } catch (err) {
-        previewStore.setError(`Pipeline 异常: ${(err as Error).message}`)
-        console.error('[Pipeline] Fetch failed:', err)
+        previewStore.setError(`dsl-to-hex 异常: ${(err as Error).message}`)
+        console.error('[DslToHex] Failed:', err)
       }
     }
     input.click()

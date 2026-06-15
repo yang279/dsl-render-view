@@ -38,7 +38,7 @@ export function useWindowBridge() {
 
     const resList: ZipResource[] = []
     let txtBuf: ArrayBuffer | null = null
-    const resourceMap: Record<string, string> = {}
+    const resourceMap: Record<string, string | Uint8Array> = {}
     let hexStr = ''
 
     for (const key of entries) {
@@ -61,15 +61,13 @@ export function useWindowBridge() {
         const url  = URL.createObjectURL(blob)
         resList.push({ filename: key, blobUrl: url, mimeType: mime })
       } else if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.webp' || ext === '.gif') {
-        const buf  = await zip.files[key].async('arraybuffer')
+        const buf   = await zip.files[key].async('arraybuffer')
         const bytes = new Uint8Array(buf)
-        let binary = ''
-        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
         const bareName = key.replace(/^.*\/([^/]+)$/, '$1')
-        resourceMap[bareName] = `data:${mime};base64,${btoa(binary)}`
+        resourceMap[bareName] = bytes
         const blob = new Blob([buf], { type: mime })
         const url  = URL.createObjectURL(blob)
-        resList.push({ filename: key, blobUrl: url, mimeType: mime })
+        resList.push({ filename: key, blobUrl: url, mimeType: mime, content: bytes })
       } else {
         const buf  = await zip.files[key].async('arraybuffer')
         const blob = new Blob([buf], { type: mime })

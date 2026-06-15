@@ -8,7 +8,7 @@ export const usePreviewStore = defineStore('preview', () => {
   const txtContent = ref<ArrayBuffer | null>(null)
   const resources  = ref<ZipResource[]>([])
   const hexData    = ref('')
-  const resourceMap     = ref<Record<string, string>>({})
+  const resourceMap     = ref<Record<string, string | Uint8Array>>({})
   const version    = ref(0)
   let _cleanup: (() => void) | null = null
 

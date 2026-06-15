@@ -2,7 +2,7 @@ export interface ZipResource {
   filename: string
   blobUrl: string
   mimeType: string
-  content?: ArrayBuffer | string
+  content?: ArrayBuffer | Uint8Array | string
 }
 
 export interface Rect {

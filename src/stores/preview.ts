@@ -8,7 +8,7 @@ export const usePreviewStore = defineStore('preview', () => {
   const txtContent = ref<ArrayBuffer | null>(null)
   const resources  = ref<ZipResource[]>([])
   const hexData    = ref('')
-  const svgMap     = ref<Record<string, string>>({})
+  const resourceMap     = ref<Record<string, string>>({})
   const version    = ref(0)
   let _cleanup: (() => void) | null = null
 
@@ -40,8 +40,8 @@ export const usePreviewStore = defineStore('preview', () => {
     version.value++
   }
 
-  function setSvgMap(map: Record<string, string>) {
-    svgMap.value = map
+  function setResourceMap(map: Record<string, string>) {
+    resourceMap.value = map
   }
 
   function clear() {
@@ -52,12 +52,12 @@ export const usePreviewStore = defineStore('preview', () => {
     txtContent.value = null
     resources.value  = []
     hexData.value    = ''
-    svgMap.value     = {}
+    resourceMap.value     = {}
     _cleanup         = null
   }
 
   return {
-    src, error, txtContent, resources, hexData, svgMap, version,
-    load, setError, setTxt, setResources, setHexData, setSvgMap, clear,
+    src, error, txtContent, resources, hexData, resourceMap, version,
+    load, setError, setTxt, setResources, setHexData, setResourceMap, clear,
   }
 })

@@ -38,7 +38,7 @@ export function useWindowBridge() {
 
     const resList: ZipResource[] = []
     let txtBuf: ArrayBuffer | null = null
-    const svgMap: Record<string, string> = {}
+    const resourceMap: Record<string, string> = {}
     let hexStr = ''
 
     for (const key of entries) {
@@ -54,9 +54,19 @@ export function useWindowBridge() {
         resList.push({ filename: key, blobUrl: url, mimeType: mime, content: txtBuf })
       } else if (ext === '.svg') {
         const svgText = await zip.files[key].async('string')
-        const bareName = key.replace(/^.*?([^/]+)\.svg$/, '$1')
-        svgMap[bareName] = svgText
+        const bareName = key.replace(/^.*\/([^/]+)$/, '$1')
+        resourceMap[bareName] = svgText
         const buf  = await zip.files[key].async('arraybuffer')
+        const blob = new Blob([buf], { type: mime })
+        const url  = URL.createObjectURL(blob)
+        resList.push({ filename: key, blobUrl: url, mimeType: mime })
+      } else if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.webp' || ext === '.gif') {
+        const buf  = await zip.files[key].async('arraybuffer')
+        const bytes = new Uint8Array(buf)
+        let binary = ''
+        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
+        const bareName = key.replace(/^.*\/([^/]+)$/, '$1')
+        resourceMap[bareName] = `data:${mime};base64,${btoa(binary)}`
         const blob = new Blob([buf], { type: mime })
         const url  = URL.createObjectURL(blob)
         resList.push({ filename: key, blobUrl: url, mimeType: mime })
@@ -71,8 +81,8 @@ export function useWindowBridge() {
     previewStore.setResources(resList)
     if (txtBuf) previewStore.setTxt(txtBuf)
     previewStore.setHexData(hexStr)
-    previewStore.setSvgMap(svgMap)
-    console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(svgMap).join(',')}`)
+    previewStore.setResourceMap(resourceMap)
+    console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(resourceMap).join(',')}`)
   }
 
   // ── DSL: upload JSON ──────────────────────────────────────────────

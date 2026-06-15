@@ -7,14 +7,14 @@ interface ConsoleEntry {
   time: number
 }
 
-function buildPluginCode(hex: string, svgMap: Record<string, string>): string {
-  const svgMapJson = JSON.stringify(svgMap)
+function buildPluginCode(hex: string, resourceMap: Record<string, string>): string {
+  const resourceMapJson = JSON.stringify(resourceMap)
 
   return `
 (async () => {
   try {
     const hex = ${JSON.stringify(hex)};
-    const svgMap = ${svgMapJson};
+    const resourceMap = ${resourceMapJson};
 
     const children = pixso.currentPage.children;
     const lastlayer = children[children.length - 1];
@@ -27,8 +27,8 @@ function buildPluginCode(hex: string, svgMap: Record<string, string>): string {
     const setPlaceholderSvg = async (node) => {
       try {
         const { note, instanceGuid, textNodeGuid, textContent } = getPluginData(node);
-        if (note && svgMap[note]) {
-          pixso.createSvg(node.id, svgMap[note]);
+        if (note && resourceMap[note]) {
+          pixso.createSvg(node.id, resourceMap[note]);
           const result = await pixso.aiEditor.call("apply", {
             operations: \`frame = U("\${instanceGuid}", { 
             "descendants": {
@@ -192,7 +192,7 @@ export default defineComponent({
       }
 
       const hex  = previewStore.hexData
-      const svgs = previewStore.svgMap
+      const svgs = previewStore.resourceMap
       if (!hex && !Object.keys(svgs).length) {
         addConsoleEntry('warn', '[Plugin] No hex/svg data available, upload a ZIP first')
         return
@@ -233,7 +233,7 @@ export default defineComponent({
 
       injectConsoleInterceptor()
 
-      if (!previewStore.hexData && !Object.keys(previewStore.svgMap).length) return
+      if (!previewStore.hexData && !Object.keys(previewStore.resourceMap).length) return
 
       const iframe = iframeRef.value
       if (!iframe) return

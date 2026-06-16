@@ -7,8 +7,13 @@ interface ConsoleEntry {
   time: number
 }
 
-function buildPluginCode(hex: string, resourceMap: Record<string, string>): string {
-  const resourceMapJson = JSON.stringify(resourceMap)
+function buildPluginCode(hex: string, resourceMap: Record<string, string | Uint8Array>): string {
+  const serializableMap: Record<string, string> = {}
+  for (const [k, v] of Object.entries(resourceMap)) {
+    if (typeof v === 'string') serializableMap[k] = v
+    else serializableMap[k] = `data:image/png;base64,${btoa(Array.from(v).map(b => String.fromCharCode(b)).join(''))}`
+  }
+  const resourceMapJson = JSON.stringify(serializableMap)
 
   return `
 (async () => {

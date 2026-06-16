@@ -40,7 +40,7 @@ export const usePreviewStore = defineStore('preview', () => {
     version.value++
   }
 
-  function setResourceMap(map: Record<string, string>) {
+  function setResourceMap(map: Record<string, string | Uint8Array>) {
     resourceMap.value = map
   }
 

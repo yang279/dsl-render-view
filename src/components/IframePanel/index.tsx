@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue'
+import { defineComponent, ref, watch, onMounted, onUnmounted, toRaw } from 'vue'
 import { usePreviewStore } from '@/stores/preview'
 
 interface ConsoleEntry {
@@ -8,10 +8,14 @@ interface ConsoleEntry {
 }
 
 function buildPluginCode(hex: string, resourceMap: Record<string, string | Uint8Array>): string {
-  const serializableMap: Record<string, string> = {}
+  const serializableMap: Record<string, string | number[]> = {}
   for (const [k, v] of Object.entries(resourceMap)) {
-    if (typeof v === 'string') serializableMap[k] = v
-    else serializableMap[k] = `data:image/png;base64,${btoa(Array.from(v).map(b => String.fromCharCode(b)).join(''))}`
+    if (typeof v === 'string') {
+      serializableMap[k] = v
+    } else {
+      const raw = toRaw(v) as Uint8Array
+      serializableMap[k] = Array.from(raw)
+    }
   }
   const resourceMapJson = JSON.stringify(serializableMap)
 

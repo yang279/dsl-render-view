@@ -61,10 +61,11 @@ export function useWindowBridge() {
         const url  = URL.createObjectURL(blob)
         resList.push({ filename: key, blobUrl: url, mimeType: mime })
       } else if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.webp' || ext === '.gif') {
-        const buf   = await zip.files[key].async('arraybuffer')
-        const bytes = new Uint8Array(buf)
+        const buf      = await zip.files[key].async('arraybuffer')
+        const bytes    = new Uint8Array(buf)
+        const detached = new Uint8Array(bytes)
         const bareName = key.replace(/^.*\/([^/]+)$/, '$1')
-        resourceMap[bareName] = bytes
+        resourceMap[bareName] = detached
         const blob = new Blob([buf], { type: mime })
         const url  = URL.createObjectURL(blob)
         resList.push({ filename: key, blobUrl: url, mimeType: mime, content: bytes })

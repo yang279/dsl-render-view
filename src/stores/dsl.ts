@@ -13,6 +13,10 @@ function findNode(nodes: DslNode[], nid: number): DslNode | null {
   return null
 }
 
+function postToParent(type: string, payload: unknown) {
+  window.parent?.postMessage({ type, payload }, '*')
+}
+
 export const useDslStore = defineStore('dsl', () => {
   const nodes      = ref<DslNode[]>([])
   const sourceName = ref('')
@@ -28,6 +32,7 @@ export const useDslStore = defineStore('dsl', () => {
     node.layerType        = layerType
     node.layerName        = layerName
     node.layerDescription = layerDescription
+    postToParent('DSL_NODE_UPDATED', { nid, changes: { layerType, layerName, layerDescription } })
   }
 
   return { nodes, sourceName, setNodes, updateNodeMeta }

@@ -6,6 +6,7 @@ declare global {
     downloadDsl: () => void
     uploadZip: () => void
     uploadDslToPipeline: () => void
+    clearDsl: () => void
     runPlugin: () => Promise<void>
   }
 }

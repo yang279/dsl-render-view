@@ -83,6 +83,11 @@ export function useWindowBridge() {
     console.log(`[ZIP] loaded ${resList.length} files, hex: ${hexStr.length} chars, svgs: ${Object.keys(resourceMap).join(',')}`)
   }
 
+  // ── DSL: apply parsed data (shared by file upload & postMessage) ──
+  function applyDslData(data: unknown, name = '') {
+    dslStore.setNodes(Array.isArray(data) ? data : [data], name)
+  }
+
   // ── DSL: upload JSON ──────────────────────────────────────────────
   function uploadDsl() {
     const input = document.createElement('input')
@@ -95,7 +100,7 @@ export function useWindowBridge() {
       reader.onload = (ev) => {
         try {
           const data = JSON.parse(ev.target?.result as string)
-          dslStore.setNodes(Array.isArray(data) ? data : [data], file.name)
+          applyDslData(data, file.name)
         } catch (err) {
           console.error('[DSL] JSON parse failed:', err)
         }
@@ -195,11 +200,30 @@ export function useWindowBridge() {
     input.click()
   }
 
+  // ── DSL: clear wireframe ──────────────────────────────────────────
+  function clearDsl() {
+    dslStore.setNodes([], '')
+  }
+
+  // ── postMessage bridge ────────────────────────────────────────────
+  function onMessage(event: MessageEvent) {
+    console.log(event)
+    if (event.data?.type === 'NODE_DSL_JSON') {
+      const payload = event.data.payload
+      if (!payload) return
+      applyDslData(payload)
+    } else if (event.data?.type === 'NODE_DSL_CLEAR') {
+      clearDsl()
+    }
+  }
+
   onMounted(() => {
     window.uploadDsl           = uploadDsl
     window.downloadDsl         = downloadDsl
     window.uploadZip           = uploadZip
     window.uploadDslToPipeline = uploadDslToPipeline
+    window.clearDsl            = clearDsl
+    window.addEventListener('message', onMessage)
   })
 
   onUnmounted(() => {
@@ -208,5 +232,7 @@ export function useWindowBridge() {
     delete w.downloadDsl
     delete w.uploadZip
     delete w.uploadDslToPipeline
+    delete w.clearDsl
+    window.removeEventListener('message', onMessage)
   })
 }

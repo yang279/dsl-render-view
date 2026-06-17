@@ -13,7 +13,9 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d[k] for k in ['bin','version','main'] if k in d}, indent=2\\)\\)\")",
       "Bash(mkdir -p ~/.claude/plugins/code-simplifier/.claude-plugin)",
       "Bash(mkdir -p ~/.claude/plugins/code-simplifier/agents)",
-      "Bash(npx vue-tsc *)"
+      "Bash(npx vue-tsc *)",
+      "Bash(sudo chown -R hwl /Users/hwl/Downloads/dsl-render-view-main/node_modules)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)"
     ]
   }
 }

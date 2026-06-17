@@ -8,22 +8,33 @@ interface ConsoleEntry {
 }
 
 function buildPluginCode(hex: string, resourceMap: Record<string, string | Uint8Array>): string {
-  const serializableMap: Record<string, string | number[]> = {}
-  for (const [k, v] of Object.entries(resourceMap)) {
-    if (typeof v === 'string') {
-      serializableMap[k] = v
+  const entries: string[] = []
+  for (const [key, value] of Object.entries(resourceMap)) {
+    const ek = JSON.stringify(key)
+    if (typeof value === 'string') {
+      entries.push(`${ek}:${JSON.stringify(value)}`)
     } else {
-      const raw = toRaw(v) as Uint8Array
-      serializableMap[k] = Array.from(raw)
+      const raw = toRaw(value) as Uint8Array
+      const arr = Array.from(raw)
+      entries.push(`${ek}:{__t:"u8",__d:[${arr.join(',')}]}`)
     }
   }
-  const resourceMapJson = JSON.stringify(serializableMap)
+  const mapLiteral = `{\n${entries.join(',\n')}\n}`
+  const hexLiteral = JSON.stringify(hex)
 
   return `
 (async () => {
   try {
-    const hex = ${JSON.stringify(hex)};
-    const resourceMap = ${resourceMapJson};
+    const hex = ${hexLiteral};
+    const _raw = ${mapLiteral};
+    const resourceMap = {};
+    for (const [k, v] of Object.entries(_raw)) {
+      if (v && v.__t === "u8") {
+        resourceMap[k] = new Uint8Array(v.__d);
+      } else {
+        resourceMap[k] = v;
+      }
+    }
 
     const children = pixso.currentPage.children;
     const lastlayer = children[children.length - 1];
@@ -207,7 +218,12 @@ export default defineComponent({
         return
       }
 
-      const code = buildPluginCode(hex, svgs)
+      const rawMap: Record<string, string | Uint8Array> = {}
+      for (const [k, v] of Object.entries(svgs)) {
+        rawMap[k] = typeof v === 'string' ? v : (toRaw(v) as Uint8Array)
+      }
+
+      const code = buildPluginCode(hex, rawMap)
       addConsoleEntry('info', `[Plugin] Executing plugin, hex: ${hex.length} chars, svgs: ${Object.keys(svgs).join(',')}`)
 
       try {

@@ -8,7 +8,6 @@ export default defineComponent({
   props: {
     node:     { type: Object as PropType<DslNode>, required: true },
     selected: { type: Boolean, default: false },
-    scaleX:   { type: Number, default: 1 },
   },
   emits: ['click'],
   setup(props, { emit }) {
@@ -16,7 +15,6 @@ export default defineComponent({
 
     return () => {
       const { rect, layerType } = props.node
-      const sx    = props.scaleX
       const color = SEMANTIC_COLOR[layerType] ?? DEFAULT_COLOR
       const bg    = SEMANTIC_BG[layerType]    ?? DEFAULT_BG
 
@@ -24,9 +22,9 @@ export default defineComponent({
         <div
           style={{
             position:        'absolute',
-            left:            `${rect.x * sx}px`,
+            left:            `${rect.x}px`,
             top:             `${rect.y}px`,
-            width:           `${rect.w * sx}px`,
+            width:           `${rect.w}px`,
             height:          `${rect.h}px`,
             backgroundColor: bg,
             border:          `${hovered.value ? 2 : 1}px solid ${color}`,

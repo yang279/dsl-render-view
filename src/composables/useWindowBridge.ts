@@ -1,7 +1,7 @@
 import { onMounted, onUnmounted } from 'vue'
 import { useDslStore } from '@/stores/dsl'
 import { usePreviewStore } from '@/stores/preview'
-import type { ZipResource } from '@/types/dsl'
+import type { ZipResource, DslNode } from '@/types/dsl'
 
 const DSL_TO_HEX_URL = 'http://localhost:3204/dsl-to-hex/convert'
 
@@ -86,7 +86,13 @@ export function useWindowBridge() {
 
   // ── DSL: apply parsed data (shared by file upload & postMessage) ──
   function applyDslData(data: unknown, name = '') {
-    dslStore.setNodes(Array.isArray(data) ? data : [data], name)
+    try {
+      const node = data as DslNode
+      dslStore.setRoot(node, name)
+      window.parent?.postMessage({ type: 'NODE_DSL_LOADED', payload: { success: true } }, '*')
+    } catch (err) {
+      window.parent?.postMessage({ type: 'NODE_DSL_LOADED', payload: { success: false, error: (err as Error).message } }, '*')
+    }
   }
 
   // ── DSL: upload JSON ──────────────────────────────────────────────
@@ -113,7 +119,7 @@ export function useWindowBridge() {
 
   // ── DSL: download JSON ────────────────────────────────────────────
   function downloadDsl() {
-    const json = JSON.stringify(dslStore.nodes, null, 2)
+    const json = JSON.stringify(dslStore.root, null, 2)
     const blob = new Blob([json], { type: 'application/json' })
     const url  = URL.createObjectURL(blob)
     const a    = document.createElement('a')
@@ -151,6 +157,49 @@ export function useWindowBridge() {
   }
 
   // ── DSL → pipeline API → ZIP → Pixso ─────────────────────────────
+  async function dslToPipeline(json: unknown) {
+    try {
+      console.log(`[DslToHex] Submitting to ${DSL_TO_HEX_URL}`)
+      const res = await fetch(DSL_TO_HEX_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(json),
+      })
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({ error: res.statusText }))
+        previewStore.setError(`dsl-to-hex 请求失败: ${body.error || res.statusText}`)
+        window.parent?.postMessage({ type: 'PIPELINE_LOADED', payload: { success: false, error: body.error || res.statusText } }, '*')
+        return
+      }
+
+      const result = await res.json()
+      if (!result.zip) {
+        const errMsg = result.error ?? '未知错误'
+        previewStore.setError(`dsl-to-hex 未返回 zip: ${errMsg}`)
+        window.parent?.postMessage({ type: 'PIPELINE_LOADED', payload: { success: false, error: errMsg } }, '*')
+        return
+      }
+
+      if (result.missing_keys?.length) {
+        console.warn('[DslToHex] missing_keys:', result.missing_keys)
+      }
+
+      const binaryStr = atob(result.zip)
+      const bytes = new Uint8Array(binaryStr.length)
+      for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i)
+
+      const zipData = bytes.buffer.slice(0)
+      await processZipBuffer(bytes.buffer)
+      window.parent?.postMessage({ type: 'PIPELINE_LOADED', payload: { success: true, zipData } }, '*', [zipData])
+    } catch (err) {
+      const errMsg = (err as Error).message
+      previewStore.setError(`dsl-to-hex 异常: ${errMsg}`)
+      window.parent?.postMessage({ type: 'PIPELINE_LOADED', payload: { success: false, error: errMsg } }, '*')
+      console.error('[DslToHex] Failed:', err)
+    }
+  }
+
   async function uploadDslToPipeline() {
     const input = document.createElement('input')
     input.type   = 'file'
@@ -158,63 +207,47 @@ export function useWindowBridge() {
     input.onchange = async (e: Event) => {
       const file = (e.target as HTMLInputElement).files?.[0]
       if (!file) return
-
-      // POST design-dsl JSON to dsl-to-hex/convert
-      try {
-        const text = await file.text()
-        const json = JSON.parse(text)
-
-        console.log(`[DslToHex] Submitting ${file.name} to ${DSL_TO_HEX_URL}`)
-        const res = await fetch(DSL_TO_HEX_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(json),
-        })
-
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({ error: res.statusText }))
-          previewStore.setError(`dsl-to-hex 请求失败: ${body.error || res.statusText}`)
-          return
-        }
-
-        const result = await res.json()
-        if (!result.zip) {
-          previewStore.setError(`dsl-to-hex 未返回 zip: ${result.error ?? '未知错误'}`)
-          return
-        }
-
-        if (result.missing_keys?.length) {
-          console.warn('[DslToHex] missing_keys:', result.missing_keys)
-        }
-
-        // decode base64 ZIP
-        const binaryStr = atob(result.zip)
-        const bytes = new Uint8Array(binaryStr.length)
-        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i)
-
-        await processZipBuffer(bytes.buffer)
-      } catch (err) {
-        previewStore.setError(`dsl-to-hex 异常: ${(err as Error).message}`)
-        console.error('[DslToHex] Failed:', err)
-      }
+      const text = await file.text()
+      const json = JSON.parse(text)
+      applyDslData(json, file.name)
+      await dslToPipeline(json)
     }
     input.click()
   }
 
   // ── DSL: clear wireframe ──────────────────────────────────────────
   function clearDsl() {
-    dslStore.setNodes([], '')
+    dslStore.setRoot(null, '')
   }
 
   // ── postMessage bridge ────────────────────────────────────────────
+  async function handlePipelineZipData(buffer: ArrayBuffer) {
+    try {
+      const zipData = buffer.slice(0)
+      await processZipBuffer(buffer)
+      window.parent?.postMessage({ type: 'ZIP_LOADED', payload: { success: true, zipData } }, '*', [zipData])
+    } catch (err) {
+      window.parent?.postMessage({ type: 'ZIP_LOADED', payload: { success: false, error: (err as Error).message } }, '*')
+      console.error('[ZIP] PIPELINE_ZIP_DATA process failed:', err)
+    }
+  }
+
   function onMessage(event: MessageEvent) {
     console.log(event)
     if (event.data?.type === 'NODE_DSL_JSON') {
       const payload = event.data.payload
       if (!payload) return
       applyDslData(payload)
+    } else if (event.data?.type === 'NODE_DSL_PIPELINE') {
+      const payload = event.data.payload
+      if (!payload) return
+      dslToPipeline(payload)
     } else if (event.data?.type === 'NODE_DSL_CLEAR') {
       clearDsl()
+    } else if (event.data?.type === 'PIPELINE_ZIP_DATA') {
+      const payload = event.data.payload
+      if (!(payload instanceof ArrayBuffer)) return
+      handlePipelineZipData(payload)
     }
   }
 

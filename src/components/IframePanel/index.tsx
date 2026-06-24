@@ -179,6 +179,7 @@ export default defineComponent({
   console.warn  = function() { relay('warn',  arguments); origWarn.apply(console,  arguments); };
   console.error = function() { relay('error', arguments); origError.apply(console, arguments); };
   console.info  = function() { relay('info',  arguments); origInfo.apply(console,  arguments); };
+
 })();
 `
         win.document.head.appendChild(script)
@@ -189,9 +190,10 @@ export default defineComponent({
     }
 
     function handleMessage(event: MessageEvent) {
-      if (event.data?.source !== 'iframe-console') return
-      const { level, text } = event.data
-      if (level && text) addConsoleEntry(level, text)
+      if (event.data?.source === 'iframe-console') {
+        const { level, text } = event.data
+        if (level && text) addConsoleEntry(level, text)
+      }
     }
 
     async function runPlugin() {

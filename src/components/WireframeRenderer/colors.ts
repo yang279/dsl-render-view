@@ -21,7 +21,7 @@ export const SEMANTIC_COLOR: Record<string, string> = Object.fromEntries(
 )
 
 export const SEMANTIC_BG: Record<string, string> = Object.fromEntries(
-  Object.entries(BASE).map(([k, v]) => [k, toBg(v)])
+  Object.entries(BASE).map(([k, v]) => [k, k === 'frame' ? 'transparent' : toBg(v)])
 )
 
 export const DEFAULT_COLOR = toSolid(DEFAULT_RGB)

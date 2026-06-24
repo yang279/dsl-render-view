@@ -31,7 +31,7 @@ export default defineComponent({
     return () => (
       <div class="h-full">
         <WireframeRenderer
-          nodes={store.nodes}
+          root={store.root}
           selectedNid={selectedNode.value?.nid}
           onNodeClick={onNodeClick}
           onScroll={() => { selectedNode.value = null; popoverPos.value = null }}

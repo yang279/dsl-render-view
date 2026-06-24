@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { DslNode } from '@/types/dsl'
 
-function findNode(nodes: DslNode[], nid: number): DslNode | null {
-  for (const n of nodes) {
-    if (n.nid === nid) return n
-    if (n.children) {
-      const found = findNode(n.children, nid)
+function findNode(node: DslNode | null, nid: number): DslNode | null {
+  if (!node) return null
+  if (node.nid === nid) return node
+  if (node.children) {
+    for (const child of node.children) {
+      const found = findNode(child, nid)
       if (found) return found
     }
   }
@@ -18,16 +19,16 @@ function postToParent(type: string, payload: unknown) {
 }
 
 export const useDslStore = defineStore('dsl', () => {
-  const nodes      = ref<DslNode[]>([])
-  const sourceName = ref('')
+  const root        = ref<DslNode | null>(null)
+  const sourceName  = ref('')
 
-  function setNodes(data: DslNode[], name = '') {
-    nodes.value = data
+  function setRoot(data: DslNode | null, name = '') {
+    root.value = data
     sourceName.value = name
   }
 
   function updateNodeMeta(nid: number, layerType: string, layerName: string, layerDescription: string) {
-    const node = findNode(nodes.value, nid)
+    const node = findNode(root.value, nid)
     if (!node) return
     node.layerType        = layerType
     node.layerName        = layerName
@@ -35,5 +36,5 @@ export const useDslStore = defineStore('dsl', () => {
     postToParent('DSL_NODE_UPDATED', { nid, changes: { layerType, layerName, layerDescription } })
   }
 
-  return { nodes, sourceName, setNodes, updateNodeMeta }
+  return { root, sourceName, setRoot, updateNodeMeta }
 })

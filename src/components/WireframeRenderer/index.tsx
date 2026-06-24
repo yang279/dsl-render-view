@@ -3,8 +3,13 @@ import type { PropType } from 'vue'
 import type { DslNode } from '@/types/dsl'
 import NodeBlock from './NodeBlock'
 
-function flattenNodes(nodes: DslNode[]): DslNode[] {
-  return nodes.flatMap(n => [n, ...(n.children ? flattenNodes(n.children) : [])])
+function flattenNodes(node: DslNode | null): DslNode[] {
+  if (!node) return []
+  return [node, ...(node.children ? flattenNodesOf(node.children) : [])]
+}
+
+function flattenNodesOf(nodes: DslNode[]): DslNode[] {
+  return nodes.flatMap(n => [n, ...(n.children ? flattenNodesOf(n.children) : [])])
 }
 
 export interface ClickPayload {
@@ -19,19 +24,17 @@ const CULL_PADDING = 100
 export default defineComponent({
   name: 'WireframeRenderer',
   props: {
-    nodes:       { type: Array as PropType<DslNode[]>, required: true },
+    root:        { type: Object as PropType<DslNode | null>, default: null },
     selectedNid: { type: Number, default: undefined },
   },
   emits: ['nodeClick', 'scroll'],
   setup(props, { emit }) {
     const containerRef    = ref<HTMLElement | null>(null)
-    const containerWidth  = ref(0)
     const containerHeight = ref(0)
     const scrollTop       = ref(0)
 
     const allNodes = computed(() => {
-      const flat = flattenNodes(props.nodes)
-      // Track semantic on every node so visibleNodes recomputes when type changes
+      const flat = flattenNodes(props.root)
       flat.forEach(n => void n.layerType)
       return flat
     })
@@ -44,11 +47,6 @@ export default defineComponent({
       }
       return { w: w || 375, h: h || 812 }
     })
-
-    // Horizontal-only scale: width fills the container, height stays fixed
-    const scaleX = computed(() =>
-      containerWidth.value > 0 ? containerWidth.value / canvasSize.value.w : 1
-    )
 
     // Viewport culling: y-axis only (heights are unscaled)
     const visibleNodes = computed(() => {
@@ -66,11 +64,9 @@ export default defineComponent({
     onMounted(() => {
       const el = containerRef.value
       if (!el) return
-      containerWidth.value  = el.clientWidth
       containerHeight.value = el.clientHeight
 
       ro = new ResizeObserver(entries => {
-        containerWidth.value  = entries[0].contentRect.width
         containerHeight.value = entries[0].contentRect.height
       })
       ro.observe(el)
@@ -86,14 +82,13 @@ export default defineComponent({
     return () => (
       <div
         ref={containerRef}
-        class="w-full h-full overflow-y-auto bg-slate-100"
+        class="w-full h-full overflow-auto bg-slate-100"
         onClick={() => emit('nodeClick', null)}
       >
-        {/* Canvas fills container width; height stays at original canvas size */}
         <div
           style={{
             position: 'relative',
-            width:    '100%',
+            width:    `${canvasSize.value.w}px`,
             height:   `${canvasSize.value.h}px`,
           }}
         >
@@ -101,7 +96,6 @@ export default defineComponent({
             <NodeBlock
               key={n.nid}
               node={n}
-              scaleX={scaleX.value}
               selected={n.nid === props.selectedNid}
               onClick={(node: DslNode, e: MouseEvent) =>
                 emit('nodeClick', { node, clientX: e.clientX, clientY: e.clientY } as ClickPayload)
@@ -109,8 +103,6 @@ export default defineComponent({
             />
           ))}
         </div>
-
-
       </div>
     )
   },

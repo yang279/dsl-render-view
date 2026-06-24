@@ -20,6 +20,25 @@ export interface PostMessageEvent {
       layerDescription: string
     }
   }
+  NODE_DSL_LOADED: {
+    success: boolean
+    error?: string
+  }
   NODE_DSL_JSON: unknown
   NODE_DSL_CLEAR: undefined
+}
+
+export interface PreviewPostMessageEvent {
+  NODE_DSL_PIPELINE: unknown
+  PIPELINE_LOADED: {
+    success: boolean
+    error?: string
+    zipData?: ArrayBuffer
+  }
+  PIPELINE_ZIP_DATA: ArrayBuffer
+  ZIP_LOADED: {
+    success: boolean
+    error?: string
+    zipData?: ArrayBuffer
+  }
 }

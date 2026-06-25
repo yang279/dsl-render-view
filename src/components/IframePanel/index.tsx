@@ -288,18 +288,6 @@ export default defineComponent({
       </div>
     )
 
-    const ErrorState = ({ msg }: { msg: string }) => (
-      <div class="flex-1 flex flex-col items-center justify-center gap-3 select-none">
-        <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
-          <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <p class="text-sm text-red-500 font-medium">{msg}</p>
-      </div>
-    )
-
     const LEVEL_STYLE: Record<string, string> = {
       log:   'text-gray-600',
       info:  'text-blue-600',
@@ -368,14 +356,29 @@ export default defineComponent({
         </div>
 
         <div class="flex-1 relative min-h-0 flex flex-col">
+          {previewStore.error && (
+            <div class="absolute top-2 inset-x-2 z-20 flex items-center gap-2 px-3 py-2 bg-red-50 border border-red-200 rounded-lg shadow-sm">
+              <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p class="text-sm text-red-600 font-medium break-all">{previewStore.error}</p>
+              <button
+                class="ml-auto p-1 rounded hover:bg-red-100 text-red-400 hover:text-red-600 transition-colors flex-shrink-0"
+                onClick={() => { previewStore.clearError() }}
+              >
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          )}
           {loading.value && iframeSrc.value && (
             <div class="absolute inset-0 flex items-center justify-center bg-white/70 z-10 pointer-events-none">
               <div class="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
             </div>
           )}
-          {previewStore.error
-            ? <ErrorState msg={previewStore.error} />
-            : !iframeSrc.value
+          {!iframeSrc.value
             ? <EmptyState />
             : (
               <iframe

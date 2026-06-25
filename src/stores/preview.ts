@@ -21,7 +21,6 @@ export const usePreviewStore = defineStore('preview', () => {
 
   function setError(msg: string) {
     error.value = msg
-    src.value   = ''
   }
 
   function setTxt(buffer: ArrayBuffer) {
@@ -56,8 +55,12 @@ export const usePreviewStore = defineStore('preview', () => {
     _cleanup         = null
   }
 
+  function clearError() {
+    error.value = ''
+  }
+
   return {
     src, error, txtContent, resources, hexData, resourceMap, version,
-    load, setError, setTxt, setResources, setHexData, setResourceMap, clear,
+    load, setError, clearError, setTxt, setResources, setHexData, setResourceMap, clear,
   }
 })

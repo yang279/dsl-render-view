@@ -15,7 +15,13 @@
       "Bash(mkdir -p ~/.claude/plugins/code-simplifier/agents)",
       "Bash(npx vue-tsc *)",
       "Bash(sudo chown -R hwl /Users/hwl/Downloads/dsl-render-view-main/node_modules)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
+      "Bash(ngrok version *)",
+      "Bash(brew install *)",
+      "Bash(curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc)",
+      "Bash(sudo tee /etc/apt/trusted.gpg.d/ngrok.asc)",
+      "Bash(curl -Lo /tmp/ngrok.zip \"https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-darwin-amd64.zip\")",
+      "Bash(unzip -o /tmp/ngrok.zip -d /usr/local/bin/)"
     ]
   }
 }
